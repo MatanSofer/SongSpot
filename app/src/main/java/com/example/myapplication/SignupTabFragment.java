@@ -4,48 +4,185 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-public class SignupTabFragment extends Fragment {
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
-    EditText email,pass,passVerification,mobile;
+
+public class SignupTabFragment extends Fragment {
+    ViewGroup root;
+    TextInputLayout emailBorder,passBorder,passVerificationBorder,ageBorder,genderBorder;
+    TextInputEditText email,pass,passVerification,age;
+    AutoCompleteTextView gender;
     Button login;
     float v =0;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.signup_tab_fragment, container, false);
+        root = (ViewGroup) inflater.inflate(R.layout.signup_tab_fragment, container, false);
+
+        initView();
+
+        //dropdown menu adapter
+        String[] lang = getResources().getStringArray(R.array.genders);
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(requireContext(),R.layout.dropdown_item,lang);
+        gender.setAdapter(arrayAdapter);
+
+       login.setOnClickListener((View v) -> registerUser());
+
+        return root;
+    }
+    public void initView(){
+        emailBorder = root.findViewById(R.id.emailBorder);
+        passBorder = root.findViewById(R.id.passBorder);
+        passVerificationBorder = root.findViewById(R.id.conf_passBorder);
+        ageBorder = root.findViewById(R.id.ageBorder);
+        genderBorder = root.findViewById(R.id.genderBorder);
+
 
         email = root.findViewById(R.id.email);
         pass = root.findViewById(R.id.pass);
         passVerification = root.findViewById(R.id.conf_pass);
-        mobile = root.findViewById(R.id.mobile_num);
+        age = root.findViewById(R.id.age);
+        gender = root.findViewById(R.id.gender);
         login = root.findViewById(R.id.button);
 
-        email.setTranslationX(800);
-        pass.setTranslationX(800);
-        passVerification.setTranslationX(800);
-        mobile.setTranslationX(800);
+        emailBorder.setTranslationX(800);
+        passBorder.setTranslationX(800);
+        passVerificationBorder.setTranslationX(800);
+        ageBorder.setTranslationX(800);
+        genderBorder.setTranslationX(800);
         login.setTranslationX(800);
 
-        email.setAlpha(v);
-        pass.setAlpha(v);
-        passVerification.setAlpha(v);
-        mobile.setAlpha(v);
+        emailBorder.setAlpha(v);
+        passBorder.setAlpha(v);
+        passVerificationBorder.setAlpha(v);
+        ageBorder.setAlpha(v);
+        genderBorder.setAlpha(v);
         login.setAlpha(v);
 
-        email.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        pass.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
-        passVerification.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
-        mobile.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
+        emailBorder.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+        passBorder.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
+        passVerificationBorder.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
+        ageBorder.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
+        genderBorder.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
         login.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1100).start();
 
+    }
+    public void registerUser(){
+        if(!validateEmail() | !validatePassword() | !validateVerPassword() | !validateGender() | !validateAge()){
+            return;
+        }
+        else{
+            Toast.makeText(getActivity(),"DETAILS GOOD, FROM HERE ANOTHER INTENT WE CREATE!",Toast.LENGTH_SHORT).show();
+        }
 
+    }
+    private Boolean validateEmail(){
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailStr = email.getText().toString();
+        if(emailStr.isEmpty()){
+            emailBorder.setError("Field cannot be empty");
+            return false;
+        }else if (!emailStr.matches(emailPattern)) {
+            emailBorder.setError("Invalid email address");
+            return false;
+        }
+        else{
+            emailBorder.setError(null);
+            emailBorder.setErrorEnabled(false);
+            return true;
+        }
+    }
 
-        return root;
+    String passwordVal = "^" +
+            "(?=.*[0-9])" +         //at least 1 digit
+            //"(?=.*[a-z])" +         //at least 1 lower case letter
+            //"(?=.*[A-Z])" +         //at least 1 upper case letter
+            "(?=.*[a-zA-Z])" +      //any letter
+          //  "(?=.*[@#$%^&+=])" +    //at least 1 special character
+            "(?=\\S+$)" +           //no white spaces
+            ".{6,}" +               //at least 4 characters
+            "$";
+    private Boolean validatePassword(){
+        String passwordStr = pass.getText().toString();
+        if(passwordStr.isEmpty()){
+            passBorder.setError("Field cannot be empty");
+            return false;
+        }else if(passwordStr.length() < 6 ) {
+            passBorder.setError("Password too short");
+            return false;
+        }else if (!passwordStr.matches(passwordVal)) {
+            passBorder.setError("Password is too weak");
+            return false;
+        }
+        else{
+            passBorder.setError(null);
+            passBorder.setErrorEnabled(false);
+            return true;
+        }
+    }
+    private Boolean validateVerPassword(){
+        String passwordVerStr = passVerification.getText().toString();
+        if(passwordVerStr.isEmpty()){
+            passVerificationBorder.setError("Field cannot be empty");
+            return false;
+        }else if(!passwordVerStr.equals(pass.getText().toString())) {
+            passVerificationBorder.setError("Passwords does not match");
+            return false;
+        }else if(passwordVerStr.length() < 6 ) {
+            passVerificationBorder.setError("Password too short");
+            return false;
+        }else if (!passwordVerStr.matches(passwordVal)) {
+            passVerificationBorder.setError("Password is too weak");
+            return false;
+        }
+        else{
+            passVerificationBorder.setError(null);
+            passVerificationBorder.setErrorEnabled(false);
+            return true;
+        }
+    }
+    //8-99
+    private Boolean validateAge(){
+        String ageStr = age.getText().toString();
+        if(ageStr.isEmpty()){
+            ageBorder.setError("Field cannot be empty");
+            return false;
+        }else if(Integer.parseInt(ageStr) < 8 ){
+            ageBorder.setError("Age must be above 7");
+            return false;
+        }
+        else{
+            ageBorder.setError(null);
+            ageBorder.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    //male or female
+    private Boolean validateGender(){
+        String genderStr = gender.getText().toString();
+        if(genderStr.isEmpty()){
+            genderBorder.setError("Field cannot be empty");
+            return false;
+        }else if(!genderStr.equals("Male") && !genderStr.equals("Female")){
+            genderBorder.setError("Gender must be from the list");
+            return false;
+        }
+        else{
+            genderBorder.setError(null);
+            genderBorder.setErrorEnabled(false);
+            return true;
+        }
     }
 }

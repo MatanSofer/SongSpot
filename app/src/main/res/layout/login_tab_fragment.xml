@@ -3,45 +3,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <EditText
-        android:id="@+id/email"
-        android:singleLine="true"
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/emailBorder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="Email"
         app:layout_constraintWidth_percent=".8"
         app:layout_constraintVertical_bias=".3"
         app:layout_constraintHorizontal_bias=".5"
-        android:background="@drawable/edit_text_bg"
-        android:hint="Email"
-        android:textSize="16sp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="4dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/pass"
-        android:singleLine="true"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/passBorder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:inputType="textPassword"
-        android:textSize="16sp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:background="@drawable/edit_text_bg"
-        android:paddingBottom="10dp"
         app:layout_constraintVertical_bias="0"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintTop_toBottomOf="@+id/emailBorder"
+        app:layout_constraintWidth_percent=".8"
+        app:passwordToggleEnabled="true"
+        android:paddingBottom="4dp"
+       >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pass"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button"
@@ -57,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass"
+        app:layout_constraintTop_toBottomOf="@+id/passBorder"
         app:layout_constraintWidth_percent=".8" />
 
     <TextView
@@ -71,8 +81,8 @@
         android:textSize="14sp"
         android:layout_marginRight="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/pass"
+        app:layout_constraintEnd_toEndOf="@+id/passBorder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass" />
+        app:layout_constraintTop_toBottomOf="@+id/passBorder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

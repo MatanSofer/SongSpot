@@ -1,95 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <EditText
-        android:id="@+id/email"
-        android:singleLine="true"
+    android:layout_height="match_parent">
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/emailBorder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:hint="Email"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/edit_text_bg"
         android:textSize="16sp"
-        app:layout_constraintVertical_bias="1"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/mobile_num"
+        app:layout_constraintBottom_toTopOf="@+id/passBorder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".8" />
-
-    <EditText
-        android:id="@+id/mobile_num"
-        android:singleLine="true"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="1"
         app:layout_constraintWidth_percent=".8"
-        app:layout_constraintVertical_bias=".3"
-        app:layout_constraintHorizontal_bias=".5"
-        android:hint="Mobile Num"
-        android:background="@drawable/edit_text_bg"
-        android:textSize="16sp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingBottom="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/pass"
-        android:singleLine="true"
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/passBorder"
+        android:layout_marginTop="10dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:hint="Password"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/edit_text_bg"
+        android:paddingBottom="4dp"
         android:textSize="16sp"
-        app:layout_constraintVertical_bias="0"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mobile_num"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".3"
+        app:layout_constraintWidth_percent=".8"
+        app:passwordToggleEnabled="true">
 
-    <EditText
-        android:id="@+id/conf_pass"
-        android:singleLine="true"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pass"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/conf_passBorder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
         android:hint="Confirm Password"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="4dp"
         android:textSize="16sp"
-        android:background="@drawable/edit_text_bg"
-        android:layout_marginTop="20dp"
-        app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias=".5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintTop_toBottomOf="@+id/passBorder"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintWidth_percent=".8"
+        app:passwordToggleEnabled="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/conf_pass"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/ageBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Age"
+        android:minWidth="100dp"
+        android:paddingBottom="4dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/conf_passBorder"
+        app:layout_constraintTop_toBottomOf="@+id/conf_passBorder"
+        app:layout_constraintWidth_percent=".8">
+
+         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="2"
+            android:singleLine="true"
+
+             />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/genderBorder"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Gender"
+        android:paddingBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ageBorder"
+        app:layout_constraintEnd_toEndOf="@+id/conf_passBorder"
+        app:layout_constraintTop_toBottomOf="@+id/conf_passBorder"
+        app:layout_constraintWidth_percent=".8">
+
+        <AutoCompleteTextView
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:singleLine="true"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_bg"
-        app:backgroundTint="@color/color6"
         android:text="Signup"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -97,8 +149,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass"
-        app:layout_constraintVertical_bias=".7"
+        app:layout_constraintTop_toBottomOf="@+id/genderBorder"
+        app:layout_constraintVertical_bias=".8"
         app:layout_constraintWidth_percent=".8" />
 
 

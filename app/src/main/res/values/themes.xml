@@ -11,6 +11,22 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/color6</item>
+
+
+        <!-- inputEditText. -->
+        <item name="boxBackgroundMode">outline</item>
+        <item name="android:textColorHint">@color/color7</item>
+        <item name="hintTextColor">@color/color2</item>
+        <item name="boxStrokeColor">@color/color2</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusBottomEnd">20dp</item>
+        <item name="boxCornerRadiusBottomStart">20dp</item>
+        <item name="boxCornerRadiusTopEnd">20dp</item>
+        <item name="boxCornerRadiusTopStart">20dp</item>
+
+
         <!-- Customize your theme here. -->
     </style>
+
+
 </resources>
