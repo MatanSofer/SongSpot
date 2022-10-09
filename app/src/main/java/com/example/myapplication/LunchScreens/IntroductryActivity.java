@@ -1,8 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.LunchScreens;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -15,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.myapplication.R;
 
 public class IntroductryActivity extends AppCompatActivity {
     ImageView logo,splashImg;

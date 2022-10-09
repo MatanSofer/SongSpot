@@ -1,12 +1,12 @@
-package com.example.myapplication;
+package com.example.myapplication.LoginRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 

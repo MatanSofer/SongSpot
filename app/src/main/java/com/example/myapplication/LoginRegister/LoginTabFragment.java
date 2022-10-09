@@ -1,5 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.LoginRegister;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.MapsAPI.GoogleMapsAPI;
+import com.example.myapplication.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -27,7 +30,10 @@ public class LoginTabFragment extends Fragment {
 
         initView();
 
-
+        login.setOnClickListener((View v) -> {
+            Intent intent = new Intent(getActivity(), GoogleMapsAPI.class);
+            startActivity(intent);
+        });
         return root;
     }
 
