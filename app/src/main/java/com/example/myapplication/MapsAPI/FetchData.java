@@ -1,0 +1,80 @@
+package com.example.myapplication.MapsAPI;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+public class FetchData extends AsyncTask<Object,String,String> {
+
+    String googleNearByPlacesData ;
+    GoogleMap googleMap;
+    String url;
+    String temp;
+    @Override
+    protected void onPostExecute(String s) {
+        //using volley
+        Log.d("json?" ,s);
+        try{
+
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = jsonObject.getJSONArray("results");
+
+            for (int i= 0 ; i < jsonArray.length() ; i++){
+                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                JSONObject getLocation = jsonObject1.getJSONObject("geometry").
+                        getJSONObject("location");
+
+                String lat = getLocation.getString("lat");
+                String lng = getLocation.getString("lng");
+
+
+
+
+                JSONObject getName = jsonArray.getJSONObject(i);
+                String name = getName.getString("name");
+                //GoogleMapsAPI.placesType += getName.getString("types");
+                //Log.d("typeIs",getName.getString("types"));
+
+//                temp += getName.getString("types");
+//                if(i==jsonArray.length()-1){
+//                    Log.d("typeIs",temp );
+//                }
+                LatLng latLng = new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
+                MarkerOptions maekerOptions = new MarkerOptions();
+                maekerOptions.title(name);
+                maekerOptions.position(latLng);
+                googleMap.addMarker(maekerOptions);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected String doInBackground(Object... objects) {
+        try {
+
+            googleMap = (GoogleMap)objects[0];
+            url = (String)objects[1];
+            DownloadUrl downloadUrl = new DownloadUrl();
+            googleNearByPlacesData = downloadUrl.retireveUrl(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  googleNearByPlacesData;
+    }
+}

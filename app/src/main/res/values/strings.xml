@@ -4,4 +4,7 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+    AIzaSyDvPQz8NNYD84bY0fHvt3LhC57U8sB_dzA
+    </string>
 </resources>
