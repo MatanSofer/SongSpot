@@ -3,8 +3,10 @@ package com.example.myapplication.MapsAPI;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.myapplication.DataSingelton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -13,13 +15,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FetchData extends AsyncTask<Object,String,String> {
 
     String googleNearByPlacesData ;
     GoogleMap googleMap;
     String url;
-    String temp;
+    List<String> placesFound = new ArrayList<>();
     @Override
     protected void onPostExecute(String s) {
         //using volley
@@ -38,26 +42,32 @@ public class FetchData extends AsyncTask<Object,String,String> {
                 String lng = getLocation.getString("lng");
 
 
-
-
                 JSONObject getName = jsonArray.getJSONObject(i);
                 String name = getName.getString("name");
-                //GoogleMapsAPI.placesType += getName.getString("types");
-                //Log.d("typeIs",getName.getString("types"));
 
-//                temp += getName.getString("types");
-//                if(i==jsonArray.length()-1){
-//                    Log.d("typeIs",temp );
-//                }
+                try {
+                    JSONArray jsonArrayType = jsonArray.getJSONObject(i).getJSONArray("types");
+
+                    placesFound.add((String) jsonArrayType.get(0));
+                   //Log.d("place" + i + getName.getString("name"), (String) jsonArrayType.get(0));
+                }catch (Exception e){
+                    Log.d("ERR", "onPostExecute:cant find type location for some reason ");
+                }
+
                 LatLng latLng = new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
                 MarkerOptions maekerOptions = new MarkerOptions();
                 maekerOptions.title(name);
                 maekerOptions.position(latLng);
+//                maekerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.));
                 googleMap.addMarker(maekerOptions);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
 
             }
 
+            for(String placeType:placesFound){
+                Log.d("placetype",placeType);
+            }
+            DataSingelton.getInstance().setPlacesFound(placesFound);
 
         } catch (JSONException e) {
             e.printStackTrace();

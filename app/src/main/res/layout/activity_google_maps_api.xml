@@ -6,39 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".MapsAPI.GoogleMapsAPI">
 
-    <TextView
-        android:id="@+id/textView6"
+    <Button
+        android:id="@+id/firstButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="TextView"
+        android:layout_marginTop="4dp"
+        android:drawableLeft="@drawable/place_icon"
+        android:fontFamily="sans-serif-light"
+        android:text="Click here to find nearby places "
+        android:textAllCaps="false"
+        android:textColor="@color/color6"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/color6" />
+
+    <Button
+        android:id="@+id/secondButton"
+        android:fontFamily="sans-serif-light"
+        android:textAllCaps="false"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:drawableLeft="@drawable/check_icon"
+        android:text="Your nearby places list is ready! "
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:backgroundTint="#008000"
+        app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:text="Button"
+    <ProgressBar
+        android:elevation="35dp"
+        android:id="@+id/progressBar"
+        style="@style/ProgressBar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:progress="70"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/firstButton" />
 
-        <androidx.fragment.app.FragmentContainerView
+
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/maps"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button2"
+        app:layout_constraintTop_toBottomOf="@id/firstButton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         >
 
     </androidx.fragment.app.FragmentContainerView>
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

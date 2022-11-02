@@ -7,6 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green">#38c96d</color>
+    <color name="red">#eb4b4b</color>
+    <color name="background_dialog">#f7f7f7</color>
+    <color name="text">#a3a3a3</color>
 
     <color name="color1">#BDBDC7</color>
     <color name="color2">#505050</color>
@@ -16,6 +20,7 @@
 
     <color name="color6">#A1A7A9</color>
     <color name="color7">#6F7375</color>
+
 
     <color name ="mtrl_textinput_default_box_stroke_color">#D3D3D3</color>
 </resources>

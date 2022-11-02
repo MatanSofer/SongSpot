@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.MapsAPI.GoogleMapsAPI;
 import com.example.myapplication.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,7 +32,9 @@ public class LoginTabFragment extends Fragment {
         initView();
 
         login.setOnClickListener((View v) -> {
-            Intent intent = new Intent(getActivity(), GoogleMapsAPI.class);
+//            Intent intent = new Intent(getActivity(), GoogleMapsAPI.class);
+//            startActivity(intent);
+            Intent intent = new Intent(getActivity(), MainScreensActivity.class);
             startActivity(intent);
         });
         return root;
