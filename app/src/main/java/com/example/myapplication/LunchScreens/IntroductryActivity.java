@@ -7,13 +7,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.myapplication.FireBase.ModelFireBase;
+import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
 
 public class IntroductryActivity extends AppCompatActivity {
@@ -31,6 +35,7 @@ public class IntroductryActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+
         logo = findViewById(R.id.logo);
         splashImg = findViewById(R.id.img);
         lottieAnimationView = findViewById(R.id.lottie);
@@ -45,7 +50,23 @@ public class IntroductryActivity extends AppCompatActivity {
         splashImg.animate().translationY(-2600).setDuration(1000).setStartDelay(4000);
         logo.animate().translationY(2400).setDuration(1000).setStartDelay(4000);
         lottieAnimationView.animate().translationY(2400).setDuration(1000).setStartDelay(4000);
+        checkUserInstance();
 
+    }
+    public void checkUserInstance(){
+        if(ModelFireBase.getCurrentUser()!=null){
+            Log.d("log","IntroductryAtivity- user ID is "+ModelFireBase.getCurrentUser());
+        }else{
+            Log.d("log","IntroductryAtivity- user ID not found");
+        }
+        if (ModelFireBase.getCurrentUser() != null) {
+            Log.d("log","IntroductryAtivity- instance is exist");
+            Intent intent = new Intent(this, MainScreensActivity.class);
+            startActivity(intent);
+
+        } else {
+            Log.d("log","IntroductryAtivity- instance isnt exist");
+        }
 
     }
     private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

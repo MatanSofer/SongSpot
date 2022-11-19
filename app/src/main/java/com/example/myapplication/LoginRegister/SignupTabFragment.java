@@ -1,6 +1,8 @@
 package com.example.myapplication.LoginRegister;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,38 +13,47 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.FireBase.Model;
+import com.example.myapplication.FireBase.User;
+import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SignupTabFragment extends Fragment {
     ViewGroup root;
-    TextInputLayout emailBorder,passBorder,passVerificationBorder,ageBorder,genderBorder;
-    TextInputEditText email,pass,passVerification,age;
+    TextInputLayout emailBorder, passBorder, passVerificationBorder, ageBorder, genderBorder;
+    TextInputEditText email, pass, passVerification, age;
     AutoCompleteTextView gender;
     Button login;
-    float v =0;
-
+    float v = 0;
+    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = (ViewGroup) inflater.inflate(R.layout.signup_tab_fragment, container, false);
-
+        mAuth = FirebaseAuth.getInstance();
         initView();
 
         //dropdown menu adapter
         String[] lang = getResources().getStringArray(R.array.genders);
-        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(requireContext(),R.layout.dropdown_item,lang);
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, lang);
         gender.setAdapter(arrayAdapter);
 
-       login.setOnClickListener((View v) -> registerUser());
+        login.setOnClickListener((View v) -> registerUser());
 
         return root;
     }
-    public void initView(){
+
+    public void initView() {
         emailBorder = root.findViewById(R.id.emailBorder);
         passBorder = root.findViewById(R.id.passBorder);
         passVerificationBorder = root.findViewById(R.id.conf_passBorder);
@@ -79,26 +90,47 @@ public class SignupTabFragment extends Fragment {
         login.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(1100).start();
 
     }
-    public void registerUser(){
-        if(!validateEmail() | !validatePassword() | !validateVerPassword() | !validateGender() | !validateAge()){
+
+    public void registerUser() {
+        if (!validateEmail() | !validatePassword() | !validateVerPassword() | !validateGender() | !validateAge()) {
             return;
-        }
-        else{
-            Toast.makeText(getActivity(),"DETAILS GOOD, FROM HERE ANOTHER INTENT WE CREATE!",Toast.LENGTH_SHORT).show();
+        } else {
+            String email1 = String.valueOf(email.getText());
+            String age1 = String.valueOf(age.getText());
+            String gender1 = String.valueOf(gender.getText());
+            String password1 = String.valueOf(pass.getText());
+
+            mAuth.createUserWithEmailAndPassword(email1, password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        User user = new User(email1, age1, gender1);
+                        Model.instance.addUser(user, () -> {
+                            Log.d("log", "signup activity - has been added");
+                            Intent intent = new Intent(getActivity(), MainScreensActivity.class);
+                            startActivity(intent);
+                        });
+                    } else {
+                        Log.d("log", "signup activity -  user has not been added");
+                    }
+
+                }
+            });
+
+
         }
 
     }
-    private Boolean validateEmail(){
+
+    private Boolean validateEmail() {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String emailStr = email.getText().toString();
-        if(emailStr.isEmpty()){
+        if (emailStr.isEmpty()) {
             emailBorder.setError("Field cannot be empty");
             return false;
-        }else if (!emailStr.matches(emailPattern)) {
+        } else if (!emailStr.matches(emailPattern)) {
             emailBorder.setError("Invalid email address");
             return false;
-        }
-        else{
+        } else {
             emailBorder.setError(null);
             emailBorder.setErrorEnabled(false);
             return true;
@@ -110,60 +142,60 @@ public class SignupTabFragment extends Fragment {
             //"(?=.*[a-z])" +         //at least 1 lower case letter
             //"(?=.*[A-Z])" +         //at least 1 upper case letter
             "(?=.*[a-zA-Z])" +      //any letter
-          //  "(?=.*[@#$%^&+=])" +    //at least 1 special character
+            //  "(?=.*[@#$%^&+=])" +    //at least 1 special character
             "(?=\\S+$)" +           //no white spaces
             ".{6,}" +               //at least 4 characters
             "$";
-    private Boolean validatePassword(){
+
+    private Boolean validatePassword() {
         String passwordStr = pass.getText().toString();
-        if(passwordStr.isEmpty()){
+        if (passwordStr.isEmpty()) {
             passBorder.setError("Field cannot be empty");
             return false;
-        }else if(passwordStr.length() < 6 ) {
+        } else if (passwordStr.length() < 6) {
             passBorder.setError("Password too short");
             return false;
-        }else if (!passwordStr.matches(passwordVal)) {
+        } else if (!passwordStr.matches(passwordVal)) {
             passBorder.setError("Password is too weak");
             return false;
-        }
-        else{
+        } else {
             passBorder.setError(null);
             passBorder.setErrorEnabled(false);
             return true;
         }
     }
-    private Boolean validateVerPassword(){
+
+    private Boolean validateVerPassword() {
         String passwordVerStr = passVerification.getText().toString();
-        if(passwordVerStr.isEmpty()){
+        if (passwordVerStr.isEmpty()) {
             passVerificationBorder.setError("Field cannot be empty");
             return false;
-        }else if(!passwordVerStr.equals(pass.getText().toString())) {
+        } else if (!passwordVerStr.equals(pass.getText().toString())) {
             passVerificationBorder.setError("Passwords does not match");
             return false;
-        }else if(passwordVerStr.length() < 6 ) {
+        } else if (passwordVerStr.length() < 6) {
             passVerificationBorder.setError("Password too short");
             return false;
-        }else if (!passwordVerStr.matches(passwordVal)) {
+        } else if (!passwordVerStr.matches(passwordVal)) {
             passVerificationBorder.setError("Password is too weak");
             return false;
-        }
-        else{
+        } else {
             passVerificationBorder.setError(null);
             passVerificationBorder.setErrorEnabled(false);
             return true;
         }
     }
+
     //8-99
-    private Boolean validateAge(){
+    private Boolean validateAge() {
         String ageStr = age.getText().toString();
-        if(ageStr.isEmpty()){
+        if (ageStr.isEmpty()) {
             ageBorder.setError("Field cannot be empty");
             return false;
-        }else if(Integer.parseInt(ageStr) < 8 ){
+        } else if (Integer.parseInt(ageStr) < 8) {
             ageBorder.setError("Age must be above 7");
             return false;
-        }
-        else{
+        } else {
             ageBorder.setError(null);
             ageBorder.setErrorEnabled(false);
             return true;
@@ -171,16 +203,15 @@ public class SignupTabFragment extends Fragment {
     }
 
     //male or female
-    private Boolean validateGender(){
+    private Boolean validateGender() {
         String genderStr = gender.getText().toString();
-        if(genderStr.isEmpty()){
+        if (genderStr.isEmpty()) {
             genderBorder.setError("Field cannot be empty");
             return false;
-        }else if(!genderStr.equals("Male") && !genderStr.equals("Female")){
+        } else if (!genderStr.equals("Male") && !genderStr.equals("Female")) {
             genderBorder.setError("Gender must be from the list");
             return false;
-        }
-        else{
+        } else {
             genderBorder.setError(null);
             genderBorder.setErrorEnabled(false);
             return true;

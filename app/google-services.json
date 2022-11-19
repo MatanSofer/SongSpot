@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "356523215275",
+    "project_id": "songspot-fe1ff",
+    "storage_bucket": "songspot-fe1ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356523215275:android:ef878c6125b50583c46aee",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356523215275-lc1i7fpjdp3iga53s2abb73jh7l4m45m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzrn42DAnArRUxvnIsEBdklxXnOFIwuFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356523215275-lc1i7fpjdp3iga53s2abb73jh7l4m45m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

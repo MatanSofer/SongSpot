@@ -42,7 +42,7 @@
         android:layout_marginBottom="3dp"
         />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/exit_icon"
         android:layout_width="56dp"
         android:layout_height="wrap_content"
@@ -50,16 +50,15 @@
         android:src="@drawable/icon_exit"
         app:flow_horizontalAlign="start"
         app:layout_constraintEnd_toEndOf="parent"
-
+        android:backgroundTint="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/profile_icon"
         android:layout_width="56dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
-
-
+        android:backgroundTint="@color/white"
         android:src="@drawable/icon_profile"
         app:layout_constraintEnd_toStartOf="@+id/exit_icon"
         app:layout_constraintTop_toTopOf="parent" />

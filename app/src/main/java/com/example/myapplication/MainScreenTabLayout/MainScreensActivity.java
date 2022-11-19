@@ -5,25 +5,47 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
+import com.example.myapplication.EditDetails.EditDetailsActivity;
+import com.example.myapplication.LunchScreens.IntroductryActivity;
 import com.example.myapplication.R;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainScreensActivity extends AppCompatActivity {
 
+    ImageButton editDetailsButton , exitButton;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R
                 .layout.activity_main_screens2);
 
+        editDetailsButton = findViewById(R.id.profile_icon);
+        exitButton = findViewById(R.id.exit_icon);
+
+        editDetailsButton.setOnClickListener((View v)-> {
+            Intent editDetailsActivity = new Intent(this, EditDetailsActivity.class);
+            startActivity(editDetailsActivity);
+        });
+        exitButton.setOnClickListener((View v)->{
+            logout();
+        });
+
+
         ViewPager2 viewPager2 =findViewById(R.id.view_pager);
         viewPager2.setAdapter(new FirstPagerAdapter(this));
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
+
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
                 tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -67,5 +89,15 @@ public class MainScreensActivity extends AppCompatActivity {
             }
 
     });
+    }
+    public void logout() {
+
+        FirebaseAuth.getInstance().signOut();
+
+        Intent introductryActivity = new Intent(this, IntroductryActivity.class);
+        startActivity(introductryActivity);
+
+
+
     }
 }

@@ -2,6 +2,7 @@ package com.example.myapplication.LoginRegister;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.MapsAPI.GoogleMapsAPI;
 import com.example.myapplication.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginTabFragment extends Fragment {
     ViewGroup root;
@@ -24,20 +30,41 @@ public class LoginTabFragment extends Fragment {
     TextView forgetPass;
     Button login;
     float v =0;
+    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = (ViewGroup) inflater.inflate(R.layout.login_tab_fragment, container, false);
-
+        mAuth = FirebaseAuth.getInstance();
         initView();
 
         login.setOnClickListener((View v) -> {
-//            Intent intent = new Intent(getActivity(), GoogleMapsAPI.class);
-//            startActivity(intent);
-            Intent intent = new Intent(getActivity(), MainScreensActivity.class);
-            startActivity(intent);
+            login();
+
         });
         return root;
+    }
+
+    public void login(){
+
+            String UserEmail = String.valueOf(email.getText());
+            String UserPassword = String.valueOf(pass.getText());
+
+            mAuth.signInWithEmailAndPassword(UserEmail, UserPassword).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                     passBorder.setError(null);
+                    passBorder.setErrorEnabled(false);
+                    emailBorder.setError(null);
+                    emailBorder.setErrorEnabled(false);
+                    Log.d("log","login  - user logged in succesfully");
+                    Intent intent = new Intent(getActivity(), MainScreensActivity.class);
+                    startActivity(intent);
+                } else {
+                    emailBorder.setError("Check your details again");
+                    passBorder.setError("Check your details again");
+                    Log.d("log","login  - user was not logged in succesfully"); }
+            });
+
     }
 
     public void initView(){

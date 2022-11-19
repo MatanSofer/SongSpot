@@ -2,7 +2,7 @@ package com.example.myapplication;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//this is data that recieve only when app is running
 public class DataSingelton {
 
     private static DataSingelton single_instance = null;
