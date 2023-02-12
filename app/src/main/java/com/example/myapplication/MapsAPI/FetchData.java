@@ -49,7 +49,7 @@ public class FetchData extends AsyncTask<Object,String,String> {
                     JSONArray jsonArrayType = jsonArray.getJSONObject(i).getJSONArray("types");
 
                     placesFound.add((String) jsonArrayType.get(0));
-                   //Log.d("place" + i + getName.getString("name"), (String) jsonArrayType.get(0));
+                   Log.d("place" + i + getName.getString("name"), (String) jsonArrayType.get(0));
                 }catch (Exception e){
                     Log.d("ERR", "onPostExecute:cant find type location for some reason ");
                 }

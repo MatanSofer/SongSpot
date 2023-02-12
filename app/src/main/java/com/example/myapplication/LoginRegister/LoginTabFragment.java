@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.MapsAPI.GoogleMapsAPI;
 import com.example.myapplication.R;
+import com.example.myapplication.Spotify.SpotifyStartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,6 +33,7 @@ public class LoginTabFragment extends Fragment {
     Button login;
     float v =0;
     private FirebaseAuth mAuth;
+    ProgressBar progressBarLoading;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,18 +49,20 @@ public class LoginTabFragment extends Fragment {
     }
 
     public void login(){
-
+        progressBarLoading.setVisibility(View.VISIBLE);
             String UserEmail = String.valueOf(email.getText());
             String UserPassword = String.valueOf(pass.getText());
 
             mAuth.signInWithEmailAndPassword(UserEmail, UserPassword).addOnCompleteListener(task -> {
+                progressBarLoading.setVisibility(View.INVISIBLE);
                 if (task.isSuccessful()) {
                      passBorder.setError(null);
                     passBorder.setErrorEnabled(false);
                     emailBorder.setError(null);
                     emailBorder.setErrorEnabled(false);
                     Log.d("log","login  - user logged in succesfully");
-                    Intent intent = new Intent(getActivity(), MainScreensActivity.class);
+//                  Intent intent = new Intent(getActivity(), MainScreensActivity.class);
+                    Intent intent = new Intent(getActivity(), SpotifyStartActivity.class);
                     startActivity(intent);
                 } else {
                     emailBorder.setError("Check your details again");
@@ -71,17 +76,18 @@ public class LoginTabFragment extends Fragment {
         passBorder = root.findViewById(R.id.passBorder);
         emailBorder = root.findViewById(R.id.emailBorder);
 
+        progressBarLoading = root.findViewById(R.id.progressBar);
+        progressBarLoading.setVisibility(View.INVISIBLE);
+
         email = root.findViewById(R.id.email);
         pass = root.findViewById(R.id.pass);
         forgetPass = root.findViewById(R.id.forget_pass);
         login = root.findViewById(R.id.button);
 
-
         emailBorder.setTranslationX(800);
         passBorder.setTranslationX(800);
         forgetPass.setTranslationX(800);
         login.setTranslationX(800);
-
 
         emailBorder.setAlpha(v);
         passBorder.setAlpha(v);

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.example.myapplication.FireBase.Model;
 import com.example.myapplication.FireBase.User;
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.Spotify.SpotifyStartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -36,7 +38,7 @@ public class SignupTabFragment extends Fragment {
     Button login;
     float v = 0;
     private FirebaseAuth mAuth;
-
+    ProgressBar progressBarLoading;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = (ViewGroup) inflater.inflate(R.layout.signup_tab_fragment, container, false);
@@ -60,6 +62,8 @@ public class SignupTabFragment extends Fragment {
         ageBorder = root.findViewById(R.id.ageBorder);
         genderBorder = root.findViewById(R.id.genderBorder);
 
+        progressBarLoading = root.findViewById(R.id.progressBar);
+        progressBarLoading.setVisibility(View.INVISIBLE);
 
         email = root.findViewById(R.id.email);
         pass = root.findViewById(R.id.pass);
@@ -92,9 +96,11 @@ public class SignupTabFragment extends Fragment {
     }
 
     public void registerUser() {
+
         if (!validateEmail() | !validatePassword() | !validateVerPassword() | !validateGender() | !validateAge()) {
             return;
         } else {
+            progressBarLoading.setVisibility(View.VISIBLE);
             String email1 = String.valueOf(email.getText());
             String age1 = String.valueOf(age.getText());
             String gender1 = String.valueOf(gender.getText());
@@ -106,7 +112,9 @@ public class SignupTabFragment extends Fragment {
                         User user = new User(email1, age1, gender1);
                         Model.instance.addUser(user, () -> {
                             Log.d("log", "signup activity - has been added");
-                            Intent intent = new Intent(getActivity(), MainScreensActivity.class);
+//                           Intent intent = new Intent(getActivity(), MainScreensActivity.class);
+                            progressBarLoading.setVisibility(View.INVISIBLE);
+                            Intent intent = new Intent(getActivity(), SpotifyStartActivity.class);
                             startActivity(intent);
                         });
                     } else {

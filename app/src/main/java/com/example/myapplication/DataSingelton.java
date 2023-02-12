@@ -47,4 +47,5 @@ public class DataSingelton {
     public void setPlacesFound(List<String> placesFound) {
         this.placesFound = placesFound;
     }
+
 }

@@ -19,6 +19,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.myapplication.FireBase.ModelFireBase;
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.Spotify.SpotifyStartActivity;
 
 public class IntroductryActivity extends AppCompatActivity {
     ImageView logo,splashImg;
@@ -61,7 +62,8 @@ public class IntroductryActivity extends AppCompatActivity {
         }
         if (ModelFireBase.getCurrentUser() != null) {
             Log.d("log","IntroductryAtivity- instance is exist");
-            Intent intent = new Intent(this, MainScreensActivity.class);
+            //Intent intent = new Intent(this, MainScreensActivity.class);
+            Intent intent = new Intent(this, SpotifyStartActivity.class);
             startActivity(intent);
 
         } else {

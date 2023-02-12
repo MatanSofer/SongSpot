@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".Spotify.state.GlobalState"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,6 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+
+        <!-- <activity -->
+        <!-- android:name=".GlobalState" -->
+        <!-- android:exported="false" -->
+        <!-- android:label="@string/title_activity_global_state" -->
+        <!-- android:theme="@style/Theme.MyApplication.NoActionBar"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.app.lib_name" -->
+        <!-- android:value="" /> -->
+        <!-- </activity> -->
         <activity
             android:name=".EditDetails.EditDetailsActivity"
             android:exported="false">
@@ -25,7 +36,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDvPQz8NNYD84bY0fHvt3LhC57U8sB_dzA" />
+            android:value="AIzaSyCCRcfP4AiJLJ-zwGkPd_zJ2xOPISsgn5U" />
 
         <activity
             android:name=".MapsAPI.GoogleMapsAPI"
@@ -42,6 +53,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Spotify.SpotifyMainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".LunchScreens.IntroductryActivity"
             android:exported="true">
             <intent-filter>
@@ -49,6 +67,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Spotify.SpotifyStartActivity"
+            android:exported="true">
+
 
             <meta-data
                 android:name="android.app.lib_name"

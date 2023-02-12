@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.DataSingelton;
+import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -158,6 +159,9 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
             }
             else{
                 DataSingelton.getInstance().setUserChosenPlace(placeTypeStr);
+                //MainScreensActivity.tabLayout.clearOnTabSelectedListeners();
+                for (int i = 0 ; i < 3 ;i++)MainScreensActivity.tabLayout.getTabAt(i).view.setClickable(true);
+               // MainScreensActivity.enableTabs();
                 dialog.dismiss();
             }
 

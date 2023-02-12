@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.myapplication.DataSingelton;
 import com.example.myapplication.MapsAPI.GoogleMapsAPI;
+import com.example.myapplication.Spotify.ui.dashboard.DashboardFragment;
 
 public class FirstPagerAdapter extends FragmentStateAdapter {
     public FirstPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -21,7 +23,7 @@ public class FirstPagerAdapter extends FragmentStateAdapter {
             case 1 :
                 return new MLFragment();
             default:
-                return new SpotifyFragment();
+                return new DashboardFragment();
 
 
         }
