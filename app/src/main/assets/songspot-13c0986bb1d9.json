@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "songspot",
+  "private_key_id": "13c0986bb1d9c4e942841364fa2edcfcb41c849c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCWpk5c7VIebjGS\nn6JZmRvw924eQWvyylDaqUav3TcP8mB5p4dcIuzUP5kpS0/y65PTiawU8d4zGZzH\ndfCb8519S1LIhmUvJY/sp5WZIBaK/ULa1E0QH4Oh6ddzhJbrXp5FDxdZOsXL6E0/\nNOO9K9HzooPT/ioJiscQaceqDkmuWaflo6ASn5DNtaa4jRNhWy026JnqCK2Jd4Rn\n5FSqXM83eYyn+yWmjbd52kVokH006BHvVqqCQBBcqTGEkmzQVDK9dxj7Fr9Osra5\nTBNKPREF6pv50zfPbvKLPyyw2ApWoxQ7ss7uEW3+tPOYBiKSC6gJXxAeJ/d5rj8x\n1J0XD7xfAgMBAAECggEAOQ9+yPXez8XfIvEx9gvnKGsfm3geIhT9cQUC0CPS8khU\nwF9zBrP3ziDUq25qNtGB6XLQ6hH+no5J8sa6PueUNFvuXCODecsZa4LCSAB+aWCq\nDOay1bOKES7YO1nyK+5ntjKUHmkDeEthztoClKlfWY+prQcs9vZIle/q/39v6whX\nLQL0oMeR/NZ7fE7m4TjvnccNJoO2LaTw15HCpj/RYduo5smlDV5xss87NMnNz7Gb\nOdswLx5CeoMfu5DG1xNfOM74Qh2Ka/Zncg70WuEme9uDZqdeoorumBXNEdra/C44\nA37/eMgqzECnUm/Kfvpx34eaWsLrwFpX+kDuJHCugQKBgQDU+Bc75EprJrbkck/Q\nf0kZmkzHh3n2mjdqEsUD6lM4pRDQWZiQ0JJGXM6MvpJL0U8LyFqkMjomTm9VcZN4\nyafghc6V9nOgnXq9dRdXApCvtRGjwS6hFQyPzzaV1q67OqXYNVOZEi/RUTDzdwpg\nfO7h/1hxROCq12NzvB+5d4HlnwKBgQC1FrdzryaDluGhr/mDW9k+RPOTdZ4K+2M5\nVqcaytc2f8svpHEKuUvshtZh2/L3V566W26kooXMwjZ+vp6v9jDUfVS9DG+XLI3G\nFqY3M9i2SOAntgKj+Iua+0TWGFwkvjtBRE/QOfXZuf1eU7ZFDMJsO9KPxHGBV0jc\n4fP1oD8xQQKBgB9pH/QjbZ50LVFwUrlLrLpr+ZsMLj7i6/1nG0vCide28M3qCQiC\n2rAqDATSLr2j92ajfErvZYg01VLi139fLrV8xsVzfgZYc7vxwymAJVrk998RJRF5\nC0tCoqhi646NzdwfsV7IQek7cl7WVd95TbpjcOXz5LcN4Ys2We9+4te9AoGAcPGh\nK8LjJ5F0Wq7x1U70+NRygtcJ4lmWMk3sXVaD0hb0eFt8sa6OPxB+J3zSVhhNBHhA\nUuiWwPWknXpwaNkI7Y7Zyis2cjg0mIbJ1oY8tLxRKhNoJDLBh8EN1uZMmhIXzQY5\nLWro/on1D97wQLLLlEvfcRGZpYz2AeXfjaQLpcECgYAwPI1gNXoO0uL7TgZQYU/1\nFMzMHoO2hYm8XnvUx3T7ttcLWk0e3W63ZnEtB3NFNAt1EL49FzO+PnBCwcqMOgmA\nOHGgsCUqKXn8lkebkgPNOaFOxJtvWGafVYvVTYkSP1LerfXi7mgE5bkjTrCcLR3u\n1/Jfk/BY1XYFItTfQ18fag==\n-----END PRIVATE KEY-----\n",
+  "client_email": "songspot@songspot.iam.gserviceaccount.com",
+  "client_id": "103495208453508659436",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/songspot%40songspot.iam.gserviceaccount.com"
+}

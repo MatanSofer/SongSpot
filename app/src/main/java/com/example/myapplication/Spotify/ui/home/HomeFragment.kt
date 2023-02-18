@@ -1,25 +1,6 @@
 package com.example.myapplication.Spotify.ui.home
 
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.Spotify.touch.ListRecyclerTouchCallback
 //import com.example.myapplication.Spotify.adapter.PlaylistAdapter
-import com.example.myapplication.R
-import com.example.myapplication.Spotify.state.GlobalState
-import com.example.myapplication.Spotify.ui.SharedViewModel
-import com.spotify.protocol.types.Track
 
 //class HomeFragment : Fragment() {
 //

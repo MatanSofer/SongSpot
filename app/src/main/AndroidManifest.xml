@@ -10,13 +10,19 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/mainlogo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
-
+        <activity
+            android:name=".BigQuery.BigQueryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <!-- <activity -->
         <!-- android:name=".GlobalState" -->
         <!-- android:exported="false" -->
@@ -36,7 +42,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCCRcfP4AiJLJ-zwGkPd_zJ2xOPISsgn5U" />
+            android:value="AIzaSyBT9Om0rFLcR4DPqGEAXxhkNgoSBzWv7Uo" />
 
         <activity
             android:name=".MapsAPI.GoogleMapsAPI"
@@ -67,6 +73,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -74,8 +81,6 @@
         <activity
             android:name=".Spotify.SpotifyStartActivity"
             android:exported="true">
-
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -6,7 +6,6 @@ import android.util.Log;
 import com.example.myapplication.DataSingelton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -47,9 +46,10 @@ public class FetchData extends AsyncTask<Object,String,String> {
 
                 try {
                     JSONArray jsonArrayType = jsonArray.getJSONObject(i).getJSONArray("types");
-
-                    placesFound.add((String) jsonArrayType.get(0));
-                   Log.d("place" + i + getName.getString("name"), (String) jsonArrayType.get(0));
+                  //  if(placesFound.contains((String) jsonArrayType.get(0))) {
+                        placesFound.add((String) jsonArrayType.get(0));
+                        Log.d("place" + i + getName.getString("name"), (String) jsonArrayType.get(0));
+                  //  }
                 }catch (Exception e){
                     Log.d("ERR", "onPostExecute:cant find type location for some reason ");
                 }

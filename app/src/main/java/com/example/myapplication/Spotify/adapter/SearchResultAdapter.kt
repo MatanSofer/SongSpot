@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -15,10 +14,10 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.myapplication.Spotify.touch.ListItemTouchHelperCallback
 import com.example.myapplication.R
 import com.example.myapplication.Spotify.SpotifyMainActivity
 import com.example.myapplication.Spotify.data.TrackModel
+import com.example.myapplication.Spotify.touch.ListItemTouchHelperCallback
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import kotlinx.android.synthetic.main.search_result_track.view.*
 import java.util.*
@@ -82,7 +81,15 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
             })
             .into(holder.ivTrackImage)
 
+        holder.likeBtn.setOnClickListener { view ->
+            holder.tvLikesUpdate.text = "Song liked"
+            holder.tvLikesUpdate.setTextColor(Color.GREEN)
+        }
+        holder.dislikeBtn.setOnClickListener { view ->
+            holder.tvLikesUpdate.text = "Song disliked"
+            holder.tvLikesUpdate.setTextColor(Color.RED)
 
+        }
         holder.tvTrackName.text = currentTrack.name
         val artistNames = mutableListOf<String?>()
         currentTrack.artists?.forEach { artist ->
@@ -105,6 +112,10 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
         val tvArtists = itemView.tvArtists
         val tvTrackName = itemView.tvTrackName
         val searchResultCard  = itemView.searchResultCard
+        val likeBtn = itemView.likeBtn
+        val dislikeBtn = itemView.dislikeBtn
+        val tvLikesUpdate = itemView.tvLikesUpdate
+
     }
 
     override fun onDismissed(position: Int) {

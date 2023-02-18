@@ -76,7 +76,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="25dp"
                 android:background="@drawable/greenbtn"
-                android:text="Save and Continue"
+                android:text="Save"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="10dp"

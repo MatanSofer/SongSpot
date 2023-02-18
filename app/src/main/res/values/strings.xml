@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">SongSpot</string>
     <string-array name="genders">
         <item>Male</item>
         <item>Female</item>
     </string-array>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-    AIzaSyCCRcfP4AiJLJ-zwGkPd_zJ2xOPISsgn5U
+    AIzaSyBT9Om0rFLcR4DPqGEAXxhkNgoSBzWv7Uo
     </string>
     <string name="title_activity_main_screens">MainScreensActivity</string>
     <!-- Strings used for fragments for navigation -->

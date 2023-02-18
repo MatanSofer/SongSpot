@@ -11,7 +11,7 @@ ItemTouchHelper.Callback(){
     }
 
     override fun isItemViewSwipeEnabled(): Boolean {
-        return true
+        return false
     }
 
     override fun getMovementFlags(
@@ -31,9 +31,9 @@ ItemTouchHelper.Callback(){
         listItemTouchHelperAdapter.onItemMoved(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
-
+    // to swipe list item to left or right
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        listItemTouchHelperAdapter.onDismissed(viewHolder.adapterPosition)
+       listItemTouchHelperAdapter.onDismissed(viewHolder.adapterPosition)
     }
 
 }

@@ -1,10 +1,5 @@
 package com.example.myapplication.Spotify.network
 
-import com.example.myapplication.Spotify.data.RecommendationResults
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
-
 interface BackendApi {
 
     companion object{

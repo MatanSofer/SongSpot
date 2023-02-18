@@ -2,8 +2,6 @@ package com.example.myapplication.Spotify.state
 
 import android.app.Application
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.Spotify.data.TrackModel

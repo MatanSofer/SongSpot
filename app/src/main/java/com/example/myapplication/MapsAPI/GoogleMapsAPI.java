@@ -1,13 +1,6 @@
 package com.example.myapplication.MapsAPI;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
@@ -29,6 +22,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.myapplication.DataSingelton;
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
@@ -38,11 +37,10 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -159,9 +157,10 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
             }
             else{
                 DataSingelton.getInstance().setUserChosenPlace(placeTypeStr);
-                //MainScreensActivity.tabLayout.clearOnTabSelectedListeners();
-                for (int i = 0 ; i < 3 ;i++)MainScreensActivity.tabLayout.getTabAt(i).view.setClickable(true);
-               // MainScreensActivity.enableTabs();
+                for (int i = 0 ; i < 3 ;i++){
+                    MainScreensActivity.tabLayout.getTabAt(i).view.setClickable(true);
+                    MainScreensActivity.viewPager2.setUserInputEnabled(true);
+                }
                 dialog.dismiss();
             }
 
@@ -236,18 +235,19 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
         fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback,null);
 
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if(location!=null){
-                    lat = location.getLatitude();
-                    lng = location.getLongitude();
-
-                    LatLng latLng = new LatLng(lat,lng);
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("current location"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-                }
+        Log.d("GoogleMapsAPI","last location is " + fusedLocationProviderClient.getLastLocation());
+        task.addOnSuccessListener(location -> {
+            if(location!=null){
+                lat = location.getLatitude();
+                lng = location.getLongitude();
+                Log.d("GoogleMapsAPI","lat" + lat + " lang" + lng);
+                LatLng latLng = new LatLng(lat,lng);
+                mMap.addMarker(new MarkerOptions().position(latLng).title("current location"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+            }
+            else{
+                Log.d("GoogleMapsAPI","location is  null");
             }
         });
     }

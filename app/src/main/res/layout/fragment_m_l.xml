@@ -9,10 +9,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fragment2"
         android:gravity="center"
-        android:textAlignment="center"/>
+        android:text="fragment2"
+        android:textAlignment="center" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="203dp"
+        android:layout_height="104dp"
+        android:text="Button" />
 
 
 </FrameLayout>

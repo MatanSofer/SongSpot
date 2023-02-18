@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            card_view:layout_constraintGuide_percent="0.5" />
+            card_view:layout_constraintGuide_begin="32dp" />
 
         <ImageView
             android:id="@+id/ivTrackImage"
@@ -29,6 +29,28 @@
             android:layout_height="64dp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:srcCompat="@mipmap/ic_launcher" />
+
+        <ImageView
+            android:id="@+id/likeBtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/like"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:srcCompat="@mipmap/ic_launcher" />
+
+        <ImageView
+            android:id="@+id/dislikeBtn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/dislike"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@+id/likeBtn"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:srcCompat="@mipmap/ic_launcher" />
 
@@ -50,8 +72,19 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:text="@string/textview"
+            android:textSize="11sp"
             card_view:layout_constraintStart_toEndOf="@+id/ivTrackImage"
             card_view:layout_constraintTop_toTopOf="@+id/guideline" />
+
+        <TextView
+            android:id="@+id/tvLikesUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="25dp"
+            android:textSize="12sp"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/likeBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,7 +1,7 @@
 package com.example.myapplication.Spotify.controllers
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.myapplication.Spotify.SpotifyStartActivity
+import com.example.myapplication.MainScreenTabLayout.MainScreensActivity
 import com.example.myapplication.Spotify.data.SearchResults
 import com.example.myapplication.Spotify.data.TrackModel
 import com.example.myapplication.Spotify.network.SpotifyWebApi
@@ -58,6 +58,9 @@ class Repository(private val application: GlobalState) {
                 searchResults.value = tracks as MutableList<TrackModel>
                 application.searchResults1.value = tracks as MutableList<TrackModel>
                 Log.d("Spotify:", "Repository-performSearch() - searchResults.value size is " + searchResults.value!!.size)
+                //set the number basge at view pager to number of songs
+                MainScreensActivity.tabLayout.getTabAt(2)!!.orCreateBadge.number = searchResults.value!!.size
+
             }
         })
     }

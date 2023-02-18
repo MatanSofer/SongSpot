@@ -26,6 +26,7 @@ public class MainScreensActivity extends AppCompatActivity {
     ImageButton editDetailsButton , exitButton;
     public static TabLayout tabLayout;
     private FirebaseAuth mAuth;
+    public static ViewPager2 viewPager2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +45,9 @@ public class MainScreensActivity extends AppCompatActivity {
         });
 
 
-        ViewPager2 viewPager2 =findViewById(R.id.view_pager);
+        viewPager2 =findViewById(R.id.view_pager);
         viewPager2.setAdapter(new FirstPagerAdapter(this));
+        viewPager2.setUserInputEnabled(false);
 
        tabLayout = findViewById(R.id.tabLayout);
 
@@ -56,6 +58,7 @@ public class MainScreensActivity extends AppCompatActivity {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 tab.view.setClickable(false);
+
                 switch(position){
                     case 0:{
                         tab.setText("Location");
@@ -77,8 +80,6 @@ public class MainScreensActivity extends AppCompatActivity {
                         badgeDrawable.setNumber(0);
                         break;
                     }
-
-
 
                 }
             }

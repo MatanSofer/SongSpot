@@ -1,12 +1,5 @@
 package com.example.myapplication.LunchScreens;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +8,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.myapplication.BigQuery.BigQueryActivity;
 import com.example.myapplication.FireBase.ModelFireBase;
-import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Spotify.SpotifyStartActivity;
 
@@ -63,7 +63,8 @@ public class IntroductryActivity extends AppCompatActivity {
         if (ModelFireBase.getCurrentUser() != null) {
             Log.d("log","IntroductryAtivity- instance is exist");
             //Intent intent = new Intent(this, MainScreensActivity.class);
-            Intent intent = new Intent(this, SpotifyStartActivity.class);
+          // Intent intent = new Intent(this, SpotifyStartActivity.class);
+            Intent intent = new Intent(this, BigQueryActivity.class);
             startActivity(intent);
 
         } else {

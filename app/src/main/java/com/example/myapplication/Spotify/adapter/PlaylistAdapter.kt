@@ -1,29 +1,5 @@
 package com.example.myapplication.Spotify.adapter
 
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-
-import com.example.myapplication.Spotify.touch.ListItemTouchHelperCallback
-import com.example.myapplication.R
-import com.example.myapplication.Spotify.SpotifyMainActivity
-import com.example.myapplication.Spotify.data.TrackModel
-import com.spotify.android.appremote.api.SpotifyAppRemote
-import kotlinx.android.synthetic.main.playlist_item.view.*
-
-import java.util.*
-
 //class PlaylistAdapter: RecyclerView.Adapter<PlaylistAdapter.ViewHolder>,
 //    ListItemTouchHelperCallback {
 //

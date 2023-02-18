@@ -5,8 +5,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,10 +12,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 
 public class ModelFireBase {
@@ -33,6 +29,7 @@ public class ModelFireBase {
         currentFirebaseUser = mAuth.getCurrentUser();
         if (currentFirebaseUser != null) {
             current = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseAuth.getInstance().getCurrentUser();
         } else {
             current = null;
         }
@@ -82,12 +79,12 @@ public class ModelFireBase {
         db.collection("user")
                 .document(user1.getUserId()).set(user1.toJson())
                 .addOnSuccessListener((successListener) -> {
-                    Log.d("log","ModelFireBase - user add succesfully");
+                    Log.d("adduser","ModelFireBase - user add succesfully");
                     listener.onComplete();
                 })
                 .addOnFailureListener((e) -> {
-                    Log.d("log", e.getMessage());
-                    Log.d("log","ModelFireBase - user NOT added succesfully");
+                    Log.d("adduser", e.getMessage());
+                    Log.d("adduser","ModelFireBase - user NOT added succesfully");
 
                 });
 
