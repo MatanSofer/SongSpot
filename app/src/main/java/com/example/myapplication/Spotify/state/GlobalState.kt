@@ -21,6 +21,7 @@ class GlobalState : Application() {
     var myContext: Context? = null
     val TAG = GlobalState::class.java.simpleName
     val searchResults1 = MutableLiveData<MutableList<TrackModel>>()
+
     override fun onCreate() {
         super.onCreate()
         spotifyHeaders["Accept"] = "application/json"
@@ -29,9 +30,7 @@ class GlobalState : Application() {
             socket = IO.socket(BackendApi.BASE_URL)
         } catch (e: URISyntaxException) {
             Log.e("Spotify:", "GlobalState - Couldn't initialize socket", e)
-
         }
-
     }
 
     override fun onTerminate() {
@@ -42,4 +41,12 @@ class GlobalState : Application() {
             }
         }
     }
+
+    fun getAppContext(): Context? {
+        return myContext
+    }
+
+
+
+
 }

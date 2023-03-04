@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.myapplication.BigQuery.GetBigQuery;
 import com.example.myapplication.R;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -45,7 +46,8 @@ public class SpotifyStartActivity extends AppCompatActivity {
           spotifyMsg.animate().translationY(-1400).setDuration(1200).setStartDelay(0);
           lottie.animate().translationX(2000).setDuration(2000).setStartDelay(2000);
 
-
+//        GetBigQuery task = new GetBigQuery("SELECT id FROM songspot.songspot_spotify.spotify_songs WHERE id = '7lmeHLHBe4nmXzuXc0HDjk'",getApplicationContext());
+//        task.execute();
 
 
         Thread waitUntilAuthenticated = new Thread(() -> {

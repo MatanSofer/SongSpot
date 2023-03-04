@@ -63,8 +63,8 @@ public class IntroductryActivity extends AppCompatActivity {
         if (ModelFireBase.getCurrentUser() != null) {
             Log.d("log","IntroductryAtivity- instance is exist");
             //Intent intent = new Intent(this, MainScreensActivity.class);
-          // Intent intent = new Intent(this, SpotifyStartActivity.class);
-            Intent intent = new Intent(this, BigQueryActivity.class);
+           Intent intent = new Intent(this, SpotifyStartActivity.class);
+           // Intent intent = new Intent(this, BigQueryActivity.class);
             startActivity(intent);
 
         } else {

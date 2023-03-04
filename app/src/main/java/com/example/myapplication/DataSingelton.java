@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 //this is data that recieve only when app is running
@@ -16,31 +17,32 @@ public class DataSingelton {
     public String userChosenPlace;
     List<String> placesFound = new ArrayList<>();
     private static int age;
-    public enum AgeRange {
-        RANGE_8_18,
-        RANGE_18_30,
-        RANGE_30_50,
-        RANGE_50_99;
+    private static String gender;
+    private static String columnName ="";
 
-        public static AgeRange getAgeRange() {
+
+        public  String getColumnName() {
             Model.instance.GetUserById(ModelFireBase.getCurrentUser(), (user) -> {
                  age = Integer.parseInt(user.getAge());
-
+                 gender = user.getGender().toLowerCase(Locale.ROOT);
             });
+            columnName += gender;
             int age = 50;
             if (age >= 8 && age <= 18) {
-                return RANGE_8_18;
+                columnName += "1";
             } else if (age > 18 && age <= 30) {
-                return RANGE_18_30;
+                columnName += "2";
             } else if (age > 30 && age <= 50) {
-                return RANGE_30_50;
+                columnName += "3";
             } else if (age > 50 && age <= 99) {
-                return RANGE_50_99;
+                columnName += "4";
             } else {
                 throw new IllegalArgumentException("Invalid age: " + age);
             }
+            columnName += getUserChosenPlace();
+            return columnName;
         }
-    }
+
 
 
     private DataSingelton(){}
@@ -77,7 +79,6 @@ public class DataSingelton {
     public List<String> getPlacesFound() {
         return placesFound;
     }
-
     public void setPlacesFound(List<String> placesFound) {
         this.placesFound = placesFound;
     }

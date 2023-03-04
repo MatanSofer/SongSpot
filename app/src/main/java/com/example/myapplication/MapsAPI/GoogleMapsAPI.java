@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.BigQuery.GetBigQuery;
 import com.example.myapplication.DataSingelton;
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
@@ -161,6 +162,8 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
                     MainScreensActivity.tabLayout.getTabAt(i).view.setClickable(true);
                     MainScreensActivity.viewPager2.setUserInputEnabled(true);
                 }
+                GetBigQuery task = new GetBigQuery("SELECT id FROM songspot.songspot_spotify.spotify_songs WHERE id = '7lmeHLHBe4nmXzuXc0HDjk'",getActivity().getApplicationContext());
+                task.execute();
                 dialog.dismiss();
             }
 

@@ -1,6 +1,7 @@
 package com.example.myapplication.Spotify.controllers
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.myapplication.BigQuery.GetBigQuery
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity
 import com.example.myapplication.Spotify.data.SearchResults
 import com.example.myapplication.Spotify.data.TrackModel
@@ -31,8 +32,6 @@ class Repository(private val application: GlobalState) {
     }
 
     fun performSearch (query: String){
-
-
         val searchTracks = application.spotifyWebApi?.search(application.spotifyHeaders, query, "track")
         Log.d(
             "Spotify:",

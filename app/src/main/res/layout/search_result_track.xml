@@ -32,42 +32,44 @@
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:srcCompat="@mipmap/ic_launcher" />
 
-        <ImageView
-            android:id="@+id/likeBtn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/like"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:srcCompat="@mipmap/ic_launcher" />
+<!--        <ImageView-->
+<!--            android:id="@+id/likeBtn"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:src="@drawable/like"-->
+<!--            card_view:layout_constraintBottom_toBottomOf="parent"-->
+<!--            card_view:layout_constraintEnd_toEndOf="parent"-->
+<!--            card_view:layout_constraintTop_toTopOf="parent"-->
+<!--            card_view:srcCompat="@mipmap/ic_launcher" />-->
 
-        <ImageView
-            android:id="@+id/dislikeBtn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="15dp"
-            android:src="@drawable/dislike"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@+id/likeBtn"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:srcCompat="@mipmap/ic_launcher" />
+<!--        <ImageView-->
+<!--            android:id="@+id/dislikeBtn"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_marginEnd="15dp"-->
+<!--            android:src="@drawable/dislike"-->
+<!--            card_view:layout_constraintBottom_toBottomOf="parent"-->
+<!--            card_view:layout_constraintEnd_toStartOf="@+id/likeBtn"-->
+<!--            card_view:layout_constraintTop_toTopOf="parent"-->
+<!--            card_view:srcCompat="@mipmap/ic_launcher" />-->
 
         <TextView
             android:id="@+id/tvTrackName"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
+            android:layout_width="59dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
             android:text="@string/textview"
+            android:textStyle="bold"
             card_view:layout_constraintBottom_toTopOf="@+id/guideline"
+            card_view:layout_constraintEnd_toStartOf="@+id/ratingBar"
             card_view:layout_constraintStart_toEndOf="@+id/ivTrackImage" />
 
         <TextView
             android:id="@+id/tvArtists"
-            android:layout_width="wrap_content"
+            android:layout_width="44dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
@@ -76,15 +78,47 @@
             card_view:layout_constraintStart_toEndOf="@+id/ivTrackImage"
             card_view:layout_constraintTop_toTopOf="@+id/guideline" />
 
-        <TextView
-            android:id="@+id/tvLikesUpdate"
+        <Button
+            android:id="@+id/saveRating"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="0dp"
+            android:text="save"
+            android:textSize="10sp"
+            card_view:backgroundTint="@color/white"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+
+            card_view:strokeColor="@color/color6" />
+
+        <RatingBar
+
+            android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="25dp"
-            android:textSize="12sp"
+            android:isIndicator="false"
+
+
+
+            android:numStars="5"
+            android:progressBackgroundTint="@android:color/darker_gray"
+            android:progressTint="@color/color2"
+            android:rating="1"
+
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:stepSize="1"
+            android:transformPivotX="230dp"
+            android:transformPivotY="20dp"
+
+            card_view:layout_constraintBottom_toTopOf="@+id/saveRating"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/likeBtn" />
+            card_view:layout_constraintStart_toEndOf="@+id/tvTrackName"
+            card_view:layout_constraintTop_toTopOf="parent" />
+        <!--            card_view:layout_constraintTop_toBottomOf="@+id/likeBtn" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

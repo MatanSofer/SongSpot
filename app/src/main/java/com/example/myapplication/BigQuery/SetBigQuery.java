@@ -24,8 +24,9 @@ public class SetBigQuery extends AsyncTask<Void, Void, List<String>> {
     private final String PROJECT_ID = "songspot";
     BigQuery bigquery;
 
-    public SetBigQuery(String query) {
+    public SetBigQuery(String query,Context context) {
         this.query = query;
+        this.context = context;
         try {
             bigquery = BigQueryOptions.newBuilder().setProjectId(PROJECT_ID)
                     .setCredentials(ServiceAccountCredentials.fromStream(context.getAssets()

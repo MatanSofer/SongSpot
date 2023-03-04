@@ -1,5 +1,6 @@
 package com.example.myapplication.Spotify.adapter
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -21,6 +22,7 @@ import com.example.myapplication.Spotify.touch.ListItemTouchHelperCallback
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import kotlinx.android.synthetic.main.search_result_track.view.*
 import java.util.*
+
 
 class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
     ListItemTouchHelperCallback {
@@ -81,15 +83,34 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
             })
             .into(holder.ivTrackImage)
 
-        holder.likeBtn.setOnClickListener { view ->
-            holder.tvLikesUpdate.text = "Song liked"
-            holder.tvLikesUpdate.setTextColor(Color.GREEN)
-        }
-        holder.dislikeBtn.setOnClickListener { view ->
-            holder.tvLikesUpdate.text = "Song disliked"
-            holder.tvLikesUpdate.setTextColor(Color.RED)
+       // holder.tvLikesUpdate.text = ""
+        holder.ratingBar.rating = 0.0f
+        holder.saveRating.setText("SAVE")
+        holder.saveRating.setTextColor(Color.GRAY)
+        val colorInt: Int = context.getColor(R.color.white)
+        holder.saveRating.backgroundTintList = ColorStateList.valueOf(colorInt)
 
+        holder.saveRating.setOnClickListener{view ->
+            holder.saveRating.setText("RATING SAVED")
+            holder.saveRating.setTextColor(Color.WHITE)
+            val colorInt: Int = context.getColor(R.color.color8)
+            holder.saveRating.backgroundTintList = ColorStateList.valueOf(colorInt)
+          //  holder.saveRating.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            Log.d("Spotify:", "Search Result Adapter -holder - saved reting :"+holder.ratingBar.rating );
+//       val setQuery = SetBigQuery("UPDATE songspot.songspot_spotify.spotify_songs SET male12 = '5' WHERE id = '3YpLIrG8hG6fACaFA7NAxM'",context)
+//       setQuery.execute()
         }
+//        holder.likeBtn.setOnClickListener { view ->
+//            holder.tvLikesUpdate.text = "Song liked"
+//            holder.tvLikesUpdate.setTextColor(Color.GREEN)
+//            val setQuery = SetBigQuery("UPDATE songspot.songspot_spotify.spotify_songs SET male12 = '5' WHERE id = '3YpLIrG8hG6fACaFA7NAxM'",context)
+//            setQuery.execute()
+//        }
+//        holder.dislikeBtn.setOnClickListener { view ->
+//            holder.tvLikesUpdate.text = "Song disliked"
+//            holder.tvLikesUpdate.setTextColor(Color.RED)
+//
+//        }
         holder.tvTrackName.text = currentTrack.name
         val artistNames = mutableListOf<String?>()
         currentTrack.artists?.forEach { artist ->
@@ -112,9 +133,11 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
         val tvArtists = itemView.tvArtists
         val tvTrackName = itemView.tvTrackName
         val searchResultCard  = itemView.searchResultCard
-        val likeBtn = itemView.likeBtn
-        val dislikeBtn = itemView.dislikeBtn
-        val tvLikesUpdate = itemView.tvLikesUpdate
+//        val likeBtn = itemView.likeBtn
+//        val dislikeBtn = itemView.dislikeBtn
+        var ratingBar = itemView.ratingBar
+      //  val tvLikesUpdate = itemView.tvLikesUpdate
+        var saveRating = itemView.saveRating
 
     }
 

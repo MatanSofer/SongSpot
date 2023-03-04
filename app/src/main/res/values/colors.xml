@@ -21,6 +21,8 @@
     <color name="color6">#A1A7A9</color>
     <color name="color7">#6F7375</color>
 
+    <color name="color8">#008000</color>
+
 
     <color name ="mtrl_textinput_default_box_stroke_color">#D3D3D3</color>
 </resources>

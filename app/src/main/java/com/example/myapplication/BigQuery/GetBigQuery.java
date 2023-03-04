@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.myapplication.Spotify.state.GlobalState;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQueryOptions;
@@ -29,8 +30,10 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
     private final String PROJECT_ID = "songspot";
     BigQuery bigquery;
 
-    public GetBigQuery(String query) {
+
+    public GetBigQuery(String query,Context context) {
         this.query = query;
+        this.context = context;
         try {
             bigquery = BigQueryOptions.newBuilder().setProjectId(PROJECT_ID)
                     .setCredentials(ServiceAccountCredentials.fromStream(context.getAssets()
