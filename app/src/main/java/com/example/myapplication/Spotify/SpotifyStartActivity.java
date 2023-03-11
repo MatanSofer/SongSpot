@@ -51,16 +51,12 @@ public class SpotifyStartActivity extends AppCompatActivity {
 
 
         Thread waitUntilAuthenticated = new Thread(() -> {
-
             while (mSpotifyAppRemote == null || token == null) {}
             Log.d("Spotify:","SpotifyStartActivity - onCreate() - exit from while");
-
-            //Spotifytv.setText("Auth success");
             try {
                 Thread.sleep(1000);
             }
             catch (InterruptedException ignored) {}
-
             Log.d("Spotify:","SpotifyStartActivity-onCreate() - move to spotifyStartActivity");
             Intent newIntent = new Intent(SpotifyStartActivity.this, SpotifyMainActivity.class);
             newIntent.putExtra("token", token);
@@ -70,13 +66,6 @@ public class SpotifyStartActivity extends AppCompatActivity {
 
         });
         waitUntilAuthenticated.start();
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("Spotify:","SpotifyStartActivity - onStart() called");
         PackageManager pm = getPackageManager();
         boolean isSpotifyInstalled;
         try {
@@ -105,6 +94,41 @@ public class SpotifyStartActivity extends AppCompatActivity {
 //            dialog.show();
 
         }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("Spotify:","SpotifyStartActivity - onStart() called");
+//        PackageManager pm = getPackageManager();
+//        boolean isSpotifyInstalled;
+//        try {
+//            pm.getPackageInfo("com.spotify.music", 0);
+//            isSpotifyInstalled = true;
+//        } catch (PackageManager.NameNotFoundException e) {
+//            isSpotifyInstalled = false;
+//        }
+//
+//        if (isSpotifyInstalled) {
+//            Log.d("Spotify:","SpotifyStartActivity-onStart() - spotify is installed!");
+//            connectToSpotifyApp();
+//        }
+//        else {
+//            Log.d("Spotify:","SpotifyStartActivity-onStart() - spotify is not installed!");
+//            //TODO - MAKE A DIALOG
+//            getSpotify();
+////            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+////            builder.setMessage(R.string.dialogue_noSpotify)
+////                    .setTitle(R.string.dialogue_noSpotify_T)
+////                    .setPositiveButton(R.string.dialouge_install, (dialog, id) -> getSpotify())
+////                    .setNegativeButton(R.string.dialogue_exit, (dialog, id) -> finish())
+////                    .setCancelable(false);
+////
+////            AlertDialog dialog = builder.create();
+////            dialog.show();
+//
+//        }
     }
 
     private void getSpotify() {

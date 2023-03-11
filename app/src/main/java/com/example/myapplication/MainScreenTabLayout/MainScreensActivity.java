@@ -7,12 +7,15 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.myapplication.DataSingelton;
 import com.example.myapplication.EditDetails.EditDetailsActivity;
+import com.example.myapplication.FireBase.Model;
+import com.example.myapplication.FireBase.ModelFireBase;
 import com.example.myapplication.LunchScreens.IntroductryActivity;
 import com.example.myapplication.R;
 import com.google.android.material.badge.BadgeDrawable;
@@ -20,6 +23,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Locale;
 
 public class MainScreensActivity extends AppCompatActivity {
 
@@ -43,7 +48,12 @@ public class MainScreensActivity extends AppCompatActivity {
         exitButton.setOnClickListener((View v)->{
             logout();
         });
-
+        Model.instance.GetUserById(ModelFireBase.getCurrentUser(), (user) -> {
+            Integer age = Integer.parseInt(user.getAge());
+            DataSingelton.setAge(age);
+            String gender = user.getGender().toLowerCase(Locale.ROOT);
+            DataSingelton.setGender(gender);
+        });
 
         viewPager2 =findViewById(R.id.view_pager);
         viewPager2.setAdapter(new FirstPagerAdapter(this));

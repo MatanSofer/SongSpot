@@ -23,6 +23,21 @@
             android:orientation="horizontal"
             card_view:layout_constraintGuide_begin="32dp" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/ProgressBar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:elevation="35dp"
+            android:progress="70"
+            android:visibility="invisible"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.896"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.9" />
+
         <ImageView
             android:id="@+id/ivTrackImage"
             android:layout_width="64dp"
@@ -58,7 +73,7 @@
             android:id="@+id/tvTrackName"
             android:layout_width="59dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="5dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="4dp"
             android:text="@string/textview"
@@ -71,11 +86,10 @@
             android:id="@+id/tvArtists"
             android:layout_width="44dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:text="@string/textview"
             android:textSize="11sp"
-            card_view:layout_constraintStart_toEndOf="@+id/ivTrackImage"
+            card_view:layout_constraintStart_toStartOf="@+id/tvTrackName"
             card_view:layout_constraintTop_toTopOf="@+id/guideline" />
 
         <Button
@@ -84,7 +98,7 @@
             android:layout_width="80dp"
             android:layout_height="40dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginBottom="1dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginTop="0dp"
             android:text="save"
             android:textSize="10sp"
@@ -97,10 +111,9 @@
         <RatingBar
 
             android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="234dp"
+            android:layout_height="50dp"
             android:isIndicator="false"
-
 
 
             android:numStars="5"

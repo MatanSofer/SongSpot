@@ -6,8 +6,10 @@ import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,6 +34,8 @@ import com.example.myapplication.BigQuery.GetBigQuery;
 import com.example.myapplication.DataSingelton;
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.Ranking.Ranking;
+import com.example.myapplication.Spotify.SpotifyMainActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -48,6 +52,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.cloud.bigquery.FieldValueList;
+
+import java.util.List;
 
 public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
 
@@ -109,10 +116,12 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
         });
 
         button2.setOnClickListener((View v)->{
+
             showDialog();
         });
     return root;
     }
+
     public void showDialog(){
         Button backaccept;
         ImageView closeWindow;
@@ -120,41 +129,39 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
         ImageView status;
         TextInputLayout borderPlaceType;
         AutoCompleteTextView placeTypeItem;
-
+        ProgressBar progressbar;
 
         dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.ok);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         Window window = dialog.getWindow();
         window.setGravity(Gravity.CENTER);
-        window.getAttributes().windowAnimations = R.style.DialogAnimation;
 
         closeWindow = dialog.findViewById(R.id.close_dialog_button);
         backaccept = dialog.findViewById(R.id.backaccept);
 //        backaccept.setEnabled(false);
         tv1 = dialog.findViewById(R.id.t1);
+        progressbar = dialog.findViewById(R.id.progressbar);
         borderPlaceType = dialog.findViewById(R.id.t2);
         placeTypeItem = dialog.findViewById(R.id.placeType);
         status = dialog.findViewById(R.id.status);
+
 
 
         String[] placeTypes = DataSingelton.getInstance().convertArrayType();
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.dropdown_item,placeTypes);
         placeTypeItem.setAdapter(arrayAdapter);
 
-
-//        tv1.setText("sdasd");
-
-
         status.setImageResource(R.drawable.location_icon);
         tv1.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green));
         backaccept.setBackgroundResource(R.drawable.greenbtn);
-
 
         backaccept.setOnClickListener((View view)->{
             String placeTypeStr = placeTypeItem.getText().toString();
             if(placeTypeStr.isEmpty()){
                 borderPlaceType.setError("Place cannot be empty");
+                progressbar.setVisibility(View.VISIBLE);
+
             }
             else{
                 DataSingelton.getInstance().setUserChosenPlace(placeTypeStr);
@@ -162,8 +169,8 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
                     MainScreensActivity.tabLayout.getTabAt(i).view.setClickable(true);
                     MainScreensActivity.viewPager2.setUserInputEnabled(true);
                 }
-                GetBigQuery task = new GetBigQuery("SELECT id FROM songspot.songspot_spotify.spotify_songs WHERE id = '7lmeHLHBe4nmXzuXc0HDjk'",getActivity().getApplicationContext());
-                task.execute();
+                 Ranking.createGetQuery(getActivity().getApplicationContext(),"getTopRated");
+//                progressbar.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
 
@@ -178,7 +185,9 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
 
 
     }
-    @Override
+
+
+        @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         try {
             // Customise the styling of the base map using a JSON object defined

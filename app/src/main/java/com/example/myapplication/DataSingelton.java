@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.util.Log;
+
 import com.example.myapplication.FireBase.Model;
 import com.example.myapplication.FireBase.ModelFireBase;
 
@@ -20,14 +22,17 @@ public class DataSingelton {
     private static String gender;
     private static String columnName ="";
 
+    public static void setAge(int age) {
+        DataSingelton.age = age;
+    }
 
-        public  String getColumnName() {
-            Model.instance.GetUserById(ModelFireBase.getCurrentUser(), (user) -> {
-                 age = Integer.parseInt(user.getAge());
-                 gender = user.getGender().toLowerCase(Locale.ROOT);
-            });
+    public static void setGender(String gender) {
+        DataSingelton.gender = gender;
+    }
+
+    public  String getColumnName()  {
+        columnName="";
             columnName += gender;
-            int age = 50;
             if (age >= 8 && age <= 18) {
                 columnName += "1";
             } else if (age > 18 && age <= 30) {
@@ -36,8 +41,6 @@ public class DataSingelton {
                 columnName += "3";
             } else if (age > 50 && age <= 99) {
                 columnName += "4";
-            } else {
-                throw new IllegalArgumentException("Invalid age: " + age);
             }
             columnName += getUserChosenPlace();
             return columnName;

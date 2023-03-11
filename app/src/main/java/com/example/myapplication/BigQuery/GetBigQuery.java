@@ -5,7 +5,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
+import com.example.myapplication.DataSingelton;
+import com.example.myapplication.Ranking.Ranking;
 import com.example.myapplication.Spotify.state.GlobalState;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.BigQuery;
@@ -26,14 +29,17 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
 
     private Context context;
     private final String query;
+    private String queryType;
     private final String CREDENTIALS_FILE = "songspot-13c0986bb1d9.json";
     private final String PROJECT_ID = "songspot";
     BigQuery bigquery;
+    List<String> results = new ArrayList<>();
+    Integer songVotesNumber,songRateSum;
 
-
-    public GetBigQuery(String query,Context context) {
+    public GetBigQuery(String query, String queryType,  Context context) {
         this.query = query;
         this.context = context;
+        this.queryType = queryType;
         try {
             bigquery = BigQueryOptions.newBuilder().setProjectId(PROJECT_ID)
                     .setCredentials(ServiceAccountCredentials.fromStream(context.getAssets()
@@ -49,9 +55,9 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
 
     @Override
     protected List<String> doInBackground(Void... params) {
+
         Log.d("BigQueryActivity", "do in background has been called");
         try {
-
 
             QueryJobConfiguration queryConfig =
                     QueryJobConfiguration.newBuilder(query)
@@ -72,13 +78,34 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
                 throw new RuntimeException(queryJob.getStatus().getError().toString());
             }
             TableResult result = queryJob.getQueryResults();
-            // Extract the results and return them as a list of strings
-            List<String> results = new ArrayList<>();
-            for (FieldValueList row : result.iterateAll()) {
-                results.add(row.get("id").getStringValue());
-                Log.d("BigQueryActivity", row.get("id").getStringValue());
-            }
+            // Extract the results and return them as a list of strings due to the type of query
+            switch(queryType) {
+                case "getTopRated":
+                    for (FieldValueList row : result.iterateAll()) {
+                        results.add(row.get("id").getStringValue());
+                        Log.d("BigQueryActivity", row.get("id").getStringValue());
+                    }
+                    Ranking.songsIdResults = results;
+                    break;
+                case "getIdratingSum":
+                    for (FieldValueList row : result.iterateAll()) {
+                        results.add(Long.toString(row.get(DataSingelton.getInstance().getColumnName()+"ratesum").getLongValue()));
+                        Log.d("BigQueryActivity", Long.toString(row.get(DataSingelton.getInstance().getColumnName()+"ratesum").getLongValue()));
+                    }
+                    Ranking.idRatingSum = results;
+                    if(Ranking.idRatingSum == null) Log.d("BigQueryActivity", "idRatingSumIsNull");
 
+                    break;
+                case "getIdNumberOfSongRate":
+                    for (FieldValueList row : result.iterateAll()) {
+                        results.add(Long.toString(row.get(DataSingelton.getInstance().getColumnName()+"votenum").getLongValue()));
+                        Log.d("BigQueryActivity", Long.toString(row.get(DataSingelton.getInstance().getColumnName()+"votenum").getLongValue()));
+                    }
+                    Ranking.idVoteNum = results;
+                    if(Ranking.idVoteNum == null) Log.d("BigQueryActivity", "idVoteNumIsNull");
+
+                    break;
+            }
         } catch (InterruptedException e) {
             Log.d("BigQueryActivity", "exception has been found");
             e.printStackTrace();
@@ -90,6 +117,7 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
         protected void onPostExecute (List < String > results) {
          // Update the UI with the results
          Log.d("BigQueryActivity", "onPostExecute has been called");
+
         }
     }
 

@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.myapplication.R
+import com.example.myapplication.Ranking.Ranking
 import com.example.myapplication.Spotify.SpotifyMainActivity
 import com.example.myapplication.Spotify.data.TrackModel
 import com.example.myapplication.Spotify.touch.ListItemTouchHelperCallback
@@ -89,14 +92,20 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
         holder.saveRating.setTextColor(Color.GRAY)
         val colorInt: Int = context.getColor(R.color.white)
         holder.saveRating.backgroundTintList = ColorStateList.valueOf(colorInt)
-
+        holder.progressbar.visibility = INVISIBLE
         holder.saveRating.setOnClickListener{view ->
+            holder.progressbar.visibility = VISIBLE
             holder.saveRating.setText("RATING SAVED")
             holder.saveRating.setTextColor(Color.WHITE)
             val colorInt: Int = context.getColor(R.color.color8)
             holder.saveRating.backgroundTintList = ColorStateList.valueOf(colorInt)
           //  holder.saveRating.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
             Log.d("Spotify:", "Search Result Adapter -holder - saved reting :"+holder.ratingBar.rating );
+            Log.d("BigQueryActivity", "song id is "+currentTrack.id )
+            Ranking.currentSongID = currentTrack.id
+            Ranking.createSetQuery(holder.ratingBar.rating.toInt(),context)
+            holder.progressbar.visibility = INVISIBLE
+
 //       val setQuery = SetBigQuery("UPDATE songspot.songspot_spotify.spotify_songs SET male12 = '5' WHERE id = '3YpLIrG8hG6fACaFA7NAxM'",context)
 //       setQuery.execute()
         }
@@ -138,7 +147,7 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
         var ratingBar = itemView.ratingBar
       //  val tvLikesUpdate = itemView.tvLikesUpdate
         var saveRating = itemView.saveRating
-
+        var progressbar = itemView.progressBar
     }
 
     override fun onDismissed(position: Int) {
