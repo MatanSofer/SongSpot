@@ -2,6 +2,7 @@ package com.example.myapplication.Spotify.adapter
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -34,6 +35,7 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
     private val context: SpotifyMainActivity?
     private var spotifyAppRemote: SpotifyAppRemote
     private val TAG = SearchResultAdapter::class.java.simpleName
+    private val clickedSongIds: MutableSet<String?> = mutableSetOf()
 
     constructor(context: FragmentActivity? , appRemote: SpotifyAppRemote){
         this.context = context as SpotifyMainActivity
@@ -41,6 +43,7 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
         val view =  LayoutInflater.from(context).inflate(
             R.layout.search_result_track, parent, false
         )
@@ -86,40 +89,49 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
             })
             .into(holder.ivTrackImage)
 
-       // holder.tvLikesUpdate.text = ""
-        holder.ratingBar.rating = 0.0f
-        holder.saveRating.setText("SAVE")
-        holder.saveRating.setTextColor(Color.GRAY)
-        val colorInt: Int = context.getColor(R.color.white)
-        holder.saveRating.backgroundTintList = ColorStateList.valueOf(colorInt)
-        holder.progressbar.visibility = INVISIBLE
-        holder.saveRating.setOnClickListener{view ->
-            holder.progressbar.visibility = VISIBLE
+        //that means that the song is recommended by algorithm
+        if(currentTrack.popularity == 10){
+            currentTrack.id?.let { Log.d("currentTrack.popularity", it) }
+            val flashingBorderView = holder.flashingBorderView.background
+            if (flashingBorderView is AnimationDrawable) {
+                flashingBorderView.start()
+            }
+        }else {
+            val flashingBorderView = holder.flashingBorderView.background
+            if (flashingBorderView is AnimationDrawable) {
+                flashingBorderView.stop() // Stop the animation
+                flashingBorderView.selectDrawable(0) // Reset the drawable to its initial frame
+            }
+        }
+        if (!clickedSongIds.contains(currentTrack.id)) {
+//            holder.progressbar.visibility = INVISIBLE
+            holder.ratingBar.rating = 0.0f
+            holder.saveRating.setText("SAVE")
+            holder.saveRating.setTextColor(Color.GRAY)
+            val colorInt: Int = context.getColor(R.color.white)
+            holder.saveRating.backgroundTintList = ColorStateList.valueOf(colorInt)
+        }
+        else{
+
             holder.saveRating.setText("RATING SAVED")
             holder.saveRating.setTextColor(Color.WHITE)
             val colorInt: Int = context.getColor(R.color.color8)
             holder.saveRating.backgroundTintList = ColorStateList.valueOf(colorInt)
-          //  holder.saveRating.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+        }
+        holder.saveRating.setOnClickListener{view ->
+            clickedSongIds.add(currentTrack.id)
+
+            holder.saveRating.setText("RATING SAVED")
+            holder.saveRating.setTextColor(Color.WHITE)
+            val colorInt: Int = context.getColor(R.color.color8)
+            holder.saveRating.backgroundTintList = ColorStateList.valueOf(colorInt)
             Log.d("Spotify:", "Search Result Adapter -holder - saved reting :"+holder.ratingBar.rating );
             Log.d("BigQueryActivity", "song id is "+currentTrack.id )
             Ranking.currentSongID = currentTrack.id
-            Ranking.createSetQuery(holder.ratingBar.rating.toInt(),context)
-            holder.progressbar.visibility = INVISIBLE
+            Ranking.createSetQuery(holder.ratingBar.rating.toInt(),context,holder.progressbar)
 
-//       val setQuery = SetBigQuery("UPDATE songspot.songspot_spotify.spotify_songs SET male12 = '5' WHERE id = '3YpLIrG8hG6fACaFA7NAxM'",context)
-//       setQuery.execute()
         }
-//        holder.likeBtn.setOnClickListener { view ->
-//            holder.tvLikesUpdate.text = "Song liked"
-//            holder.tvLikesUpdate.setTextColor(Color.GREEN)
-//            val setQuery = SetBigQuery("UPDATE songspot.songspot_spotify.spotify_songs SET male12 = '5' WHERE id = '3YpLIrG8hG6fACaFA7NAxM'",context)
-//            setQuery.execute()
-//        }
-//        holder.dislikeBtn.setOnClickListener { view ->
-//            holder.tvLikesUpdate.text = "Song disliked"
-//            holder.tvLikesUpdate.setTextColor(Color.RED)
-//
-//        }
+
         holder.tvTrackName.text = currentTrack.name
         val artistNames = mutableListOf<String?>()
         currentTrack.artists?.forEach { artist ->
@@ -142,12 +154,11 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
         val tvArtists = itemView.tvArtists
         val tvTrackName = itemView.tvTrackName
         val searchResultCard  = itemView.searchResultCard
-//        val likeBtn = itemView.likeBtn
-//        val dislikeBtn = itemView.dislikeBtn
         var ratingBar = itemView.ratingBar
-      //  val tvLikesUpdate = itemView.tvLikesUpdate
         var saveRating = itemView.saveRating
         var progressbar = itemView.progressBar
+        val flashingBorderView = itemView.findViewById<View>(R.id.flashing_border_view)
+
     }
 
     override fun onDismissed(position: Int) {

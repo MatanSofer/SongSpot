@@ -14,7 +14,7 @@ data class TrackModel(val album: Album?, val artists: List<Artist>?,
                       val available_markets: List<Any>?, val disc_number: Number?,
                       val duration_ms: Number?, val explicit: Boolean?,
                       val href: String?, val id: String?, val is_local: Boolean?,
-                      val name: String?, val popularity: Number?, val preview_url: String?,
+                      val name: String?, var popularity: Number?, val preview_url: String?,
                       val track_number: Number?, val type: String?, val uri: String?): Serializable
 
 

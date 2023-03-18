@@ -44,7 +44,6 @@ public class SetBigQuery extends AsyncTask<Void, Void, List<String>> {
 
             QueryJobConfiguration queryConfig =
                     QueryJobConfiguration.newBuilder(query)
-                            // .setDestinationTable(destinationTable)
                             .setUseLegacySql(false)
                             .build();
 

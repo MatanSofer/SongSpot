@@ -11,14 +11,14 @@ class SharedViewModel(application: Application) : AndroidViewModel(application){
     private val repository = Repository(application as GlobalState)
     private val TAG = SharedViewModel::class.java.simpleName
     val searchResult = repository.searchResults
-    val playlist = repository.playlist
 
     fun addToQueue(track: TrackModel){
         repository.addToQueue(track)
     }
 
-    fun performSearch(query: String){
+    fun performSearch(query: String, songId: MutableList<String>){
         repository.performSearch(query)
+        repository.performSongById(songId)
     }
 
     fun removeFromQueue(position: Int){

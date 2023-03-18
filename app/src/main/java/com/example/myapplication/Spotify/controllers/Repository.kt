@@ -1,12 +1,12 @@
 package com.example.myapplication.Spotify.controllers
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.myapplication.BigQuery.GetBigQuery
 import com.example.myapplication.MainScreenTabLayout.MainScreensActivity
 import com.example.myapplication.Spotify.data.SearchResults
 import com.example.myapplication.Spotify.data.TrackModel
 import com.example.myapplication.Spotify.network.SpotifyWebApi
 import com.example.myapplication.Spotify.state.GlobalState
+import com.spotify.protocol.types.Track
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,6 +16,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Repository(private val application: GlobalState) {
     val playlist = MutableLiveData<MutableList<TrackModel>>()
     val searchResults = MutableLiveData<MutableList<TrackModel>>()
+    var playlistTracks : MutableList<TrackModel> = mutableListOf()
+    val playlistTracksId: MutableList<String> = mutableListOf()
+
 
 
     init{
@@ -28,10 +31,42 @@ class Repository(private val application: GlobalState) {
 
         playlist.value = mutableListOf()
         searchResults.value = mutableListOf()
+        //getByIdResults.value = mutableListOf()
         application.searchResults1.value = mutableListOf()
     }
+    fun performSongById(idList: MutableList<String>){
+       // var responseList: MutableList<TrackModel>? = null
 
+        idList.forEach { id ->
+            val track = application.spotifyWebApi?.getTrackById(application.spotifyHeaders, id)
+            track?.enqueue(object:Callback<TrackModel> {
+                override fun onResponse(call: Call<TrackModel>, response: Response<TrackModel>) {
+                    var result = response.body()
+                    result?.popularity = 10 // to flag this song is recomended
+                    if(result?.id !in playlistTracksId){
+                        playlistTracks.add(result as TrackModel)
+                        result.id?.let { playlistTracksId.add(it) }
+                        Log.d("playlistTracks performSongById size", playlistTracks.size.toString()+"---"+ result.id)
+                    }
+                    Log.d(
+                        "Spotify:",
+                        "Repositoty - performSongById() - result: " + result
+                    )
+                    searchResults.value=playlistTracks
+                     Log.d("Spotify:", "Repository-performSongById() - responseList.value size is " + searchResults.value!!.size)
+
+                }
+                override fun onFailure(call: Call<TrackModel>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
+        }
+
+    }
     fun performSearch (query: String){
+        var searchTracksList : MutableList<TrackModel> = mutableListOf()
         val searchTracks = application.spotifyWebApi?.search(application.spotifyHeaders, query, "track")
         Log.d(
             "Spotify:",
@@ -45,6 +80,7 @@ class Repository(private val application: GlobalState) {
             override fun onResponse(call: Call<SearchResults>, response: Response<SearchResults>) {
                 val results = response.body()
                 val tracks = results?.tracks?.items
+                searchTracksList = tracks as MutableList<TrackModel>
                 Log.d(
                     "Spotify:",
                     "Repositoty - performSearch() - results: " + results
@@ -53,12 +89,21 @@ class Repository(private val application: GlobalState) {
                     "Spotify:",
                     "Repositoty - performSearch() - tracks: " + tracks
                 )
-                // Add to search results
-                searchResults.value = tracks as MutableList<TrackModel>
-                application.searchResults1.value = tracks as MutableList<TrackModel>
+
+                searchTracksList.forEach { item ->
+                    if(item.id !in playlistTracksId ){
+                        playlistTracks.add(item)
+                        item.id?.let { playlistTracksId.add(it) }
+                        Log.d("playlistTracks search size", playlistTracks.size.toString()+"---"+item.id)
+                    }
+                }
+
+                searchResults.value = playlistTracks
+               // searchResults.value = tracks as MutableList<TrackModel>
+               // application.searchResults1.value = tracks as MutableList<TrackModel>
                 Log.d("Spotify:", "Repository-performSearch() - searchResults.value size is " + searchResults.value!!.size)
                 //set the number basge at view pager to number of songs
-                MainScreensActivity.tabLayout.getTabAt(2)!!.orCreateBadge.number = searchResults.value!!.size
+                MainScreensActivity.tabLayout.getTabAt(1)!!.orCreateBadge.number = searchResults.value!!.size
 
             }
         })

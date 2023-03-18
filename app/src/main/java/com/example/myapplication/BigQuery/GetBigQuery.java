@@ -1,5 +1,6 @@
 package com.example.myapplication.BigQuery;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.example.myapplication.Spotify.state.GlobalState;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQueryOptions;
+import com.google.cloud.bigquery.FieldValue;
 import com.google.cloud.bigquery.FieldValueList;
 import com.google.cloud.bigquery.Job;
 import com.google.cloud.bigquery.JobId;
@@ -28,18 +30,23 @@ import java.util.UUID;
 public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
 
     private Context context;
-    private final String query;
+    private String query;
     private String queryType;
     private final String CREDENTIALS_FILE = "songspot-13c0986bb1d9.json";
     private final String PROJECT_ID = "songspot";
     BigQuery bigquery;
     List<String> results = new ArrayList<>();
-    Integer songVotesNumber,songRateSum;
+    List<Integer> IntArrayResults = new ArrayList<>();
 
-    public GetBigQuery(String query, String queryType,  Context context) {
+    ProgressBar progressBar;
+    Dialog dialog;
+
+    public GetBigQuery(String query, String queryType,ProgressBar progressBar, Context context) {
         this.query = query;
         this.context = context;
         this.queryType = queryType;
+        this.progressBar = progressBar;
+        this.dialog =null;
         try {
             bigquery = BigQueryOptions.newBuilder().setProjectId(PROJECT_ID)
                     .setCredentials(ServiceAccountCredentials.fromStream(context.getAssets()
@@ -49,11 +56,28 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    }
+    public GetBigQuery(String query, String queryType,ProgressBar progressBar,Dialog dialog,  Context context) {
+        this.query = query;
+        this.context = context;
+        this.queryType = queryType;
+        this.progressBar = progressBar;
+        this.dialog = dialog;
+        try {
+            bigquery = BigQueryOptions.newBuilder().setProjectId(PROJECT_ID)
+                    .setCredentials(ServiceAccountCredentials.fromStream(context.getAssets()
+                            .open(CREDENTIALS_FILE))).
+                    build().
+                    getService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    protected void onPreExecute() {
+        progressBar.setVisibility(View.VISIBLE);
     }
 
-
-    @Override
     protected List<String> doInBackground(Void... params) {
 
         Log.d("BigQueryActivity", "do in background has been called");
@@ -61,7 +85,6 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
 
             QueryJobConfiguration queryConfig =
                     QueryJobConfiguration.newBuilder(query)
-                            // .setDestinationTable(destinationTable)
                             .setUseLegacySql(false)
                             .build();
 
@@ -87,24 +110,23 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
                     }
                     Ranking.songsIdResults = results;
                     break;
-                case "getIdratingSum":
+                case "votesArrray":
                     for (FieldValueList row : result.iterateAll()) {
-                        results.add(Long.toString(row.get(DataSingelton.getInstance().getColumnName()+"ratesum").getLongValue()));
-                        Log.d("BigQueryActivity", Long.toString(row.get(DataSingelton.getInstance().getColumnName()+"ratesum").getLongValue()));
+                        List<FieldValue> fieldValues = row.get(DataSingelton.getInstance().getColumnName()+"ratings").getRepeatedValue();
+                        for (FieldValue fieldValue : fieldValues) {
+                            IntArrayResults.add(fieldValue.getNumericValue().intValue());
+                            Log.d("BigQueryActivity",String.valueOf(fieldValue.getNumericValue().intValue()));
+                        }
                     }
-                    Ranking.idRatingSum = results;
-                    if(Ranking.idRatingSum == null) Log.d("BigQueryActivity", "idRatingSumIsNull");
+                    Log.d("BigQueryActivity","entered votesArrray");
+                    Ranking.voteArray = IntArrayResults;
+                    if(IntArrayResults.size() == 0 ) {
+                        Log.d("BigQueryActivity", "row isnt exist because there is no ratings array");
+                        makeNewIdRow();
+                    }
 
                     break;
-                case "getIdNumberOfSongRate":
-                    for (FieldValueList row : result.iterateAll()) {
-                        results.add(Long.toString(row.get(DataSingelton.getInstance().getColumnName()+"votenum").getLongValue()));
-                        Log.d("BigQueryActivity", Long.toString(row.get(DataSingelton.getInstance().getColumnName()+"votenum").getLongValue()));
-                    }
-                    Ranking.idVoteNum = results;
-                    if(Ranking.idVoteNum == null) Log.d("BigQueryActivity", "idVoteNumIsNull");
 
-                    break;
             }
         } catch (InterruptedException e) {
             Log.d("BigQueryActivity", "exception has been found");
@@ -113,13 +135,54 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
         return null;
     }
 
-     @Override
+
+    @Override
         protected void onPostExecute (List < String > results) {
          // Update the UI with the results
          Log.d("BigQueryActivity", "onPostExecute has been called");
+         progressBar.setVisibility(View.INVISIBLE);
+         if(dialog!=null){
+             dialog.dismiss();
+         }
+         if(queryType.equals("votesArrray")) Ranking.startRankAlgorithm(context);
+     }
 
+    private void makeNewIdRow() {
+        Log.d("BigQueryActivity", "makeNewIdRow() is called because row isnt exist");
+        this.query = "INSERT "+Ranking.tableName+"  (id) VALUES "+"('"+Ranking.currentSongID+"')";
+        try {
+            QueryJobConfiguration queryConfig =
+                    QueryJobConfiguration.newBuilder(query)
+                            .setUseLegacySql(false)
+                            .build();
+            Log.d("BigQueryActivity", "makeNewIdRow -created query config");
+
+            JobId jobId = JobId.of(UUID.randomUUID().toString());
+            Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
+            Log.d("BigQueryActivity", "makeNewIdRow - before wait to job");
+            queryJob = queryJob.waitFor();
+            Log.d("BigQueryActivity", "makeNewIdRow - job has been done");
+            if (queryJob == null) {
+                throw new RuntimeException("makeNewIdRow - Job no longer exists");
+            } else if (queryJob.getStatus().getError() != null) {
+                throw new RuntimeException(queryJob.getStatus().getError().toString());
+            }
+        } catch (InterruptedException e) {
+            Log.d("BigQueryActivity", "exception has been found");
+            e.printStackTrace();
         }
+        IntArrayResults.add(0);
+        Ranking.voteArray = IntArrayResults;
     }
+
+
+
+
+
+  }
+
+
+
 
         //should be run from outside
 //    //Call the AsyncTask to run the BigQuery query on a separate thread

@@ -20,8 +20,8 @@ public class FirstPagerAdapter extends FragmentStateAdapter {
         switch(position){
             case 0:
                 return new GoogleMapsAPI();
-            case 1 :
-                return new MLFragment();
+//            case 1 :
+//                return new MLFragment();
             default:
                 return new DashboardFragment();
 
@@ -31,6 +31,6 @@ public class FirstPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

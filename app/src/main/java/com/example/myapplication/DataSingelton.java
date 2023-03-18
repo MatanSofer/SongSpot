@@ -21,6 +21,29 @@ public class DataSingelton {
     private static int age;
     private static String gender;
     private static String columnName ="";
+    public static final List<String> places = new ArrayList<>(Arrays.asList(
+            "amusement_park",
+            "art_gallery",
+            "bakery",
+            "bar",
+            "beauty_salon",
+            "cafe",
+            "campground",
+            "casino",
+            "clothing_store",
+            "convenience_store",
+            "gym",
+            "hair_care",
+            "lodging",
+            "night_club",
+            "park",
+            "restaurant",
+            "secondary_school",
+            "shoe_store",
+            "shopping_mall",
+            "spa",
+            "school"
+    ));
 
     public static void setAge(int age) {
         DataSingelton.age = age;
@@ -58,8 +81,11 @@ public class DataSingelton {
         return single_instance;
     }
 
-    //also removes duplicat
+    //also removes duplicate
     public String[] convertArrayType(){
+        // we dont want to display unsupported places
+        placesFound.removeIf(place -> !places.contains(place));
+
         String[] strarray = new String[placesFound.size()];
         placesFound.toArray(strarray );
         for(int i = 0 ; i < placesFound.size() ; i++){
@@ -75,8 +101,9 @@ public class DataSingelton {
 
     }
 
+    //because in big query we are using _ instead of space
     public void setUserChosenPlace(String userChosenPlace) {
-        this.userChosenPlace = userChosenPlace;
+        this.userChosenPlace = userChosenPlace.replace(" ", "_");
     }
 
     public List<String> getPlacesFound() {

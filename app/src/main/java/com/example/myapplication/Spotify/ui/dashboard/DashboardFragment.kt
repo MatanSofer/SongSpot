@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.example.myapplication.DataSingelton
 import com.example.myapplication.MapsAPI.LocationGenre
 import com.example.myapplication.R
+import com.example.myapplication.Ranking.Ranking
 import com.example.myapplication.Spotify.SpotifyMainActivity
 import com.example.myapplication.Spotify.adapter.SearchResultAdapter
 import com.example.myapplication.Spotify.state.GlobalState
@@ -47,21 +49,18 @@ class DashboardFragment : Fragment() {
             } ?: throw Exception("Invalid Activity")
 
         Log.d("Spotify:", "DashboardFragment-onCreateView() - called")
-
         rvSearchResults = root.findViewById(R.id.rvSearchResults)
-//        val searchInput = root.findViewById<EditText>(R.id.searchInput)
-//        val btnSearch = root.findViewById<Button>(R.id.btnSearch)
+
+
 
         state = activity?.application as GlobalState
 
 
-//        btnSearch.setOnClickListener {
-//            if(searchInput.text.isNotEmpty()){
-                //sharedViewModel.performSearch(searchInput.text.toString())
+
 
         val randomGenre = LocationGenre.getRandomGenreForLocation(DataSingelton.getInstance().getUserChosenPlace())
         Log.d("Spotify:", "genre selected " + randomGenre);
-                sharedViewModel.performSearch("genre:$randomGenre");
+                sharedViewModel.performSearch("genre:$randomGenre",Ranking.songsIdResults);
     //            sharedViewModel.performSearch("eminem");
 //            } else {
 //                searchInput.error = "Search query cannot be empty"

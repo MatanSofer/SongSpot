@@ -75,12 +75,12 @@ public class MainScreensActivity extends AppCompatActivity {
                         tab.setIcon(R.drawable.first_tab_icon);
                         break;
                     }
+//                    case 1:{
+//                        tab.setText("Preference");
+//                        tab.setIcon(R.drawable.second_tab_icon);
+//                        break;
+//                    }
                     case 1:{
-                        tab.setText("Preference");
-                        tab.setIcon(R.drawable.second_tab_icon);
-                        break;
-                    }
-                    case 2:{
                         tab.setText("Playlist");
                         tab.setIcon(R.drawable.third_tab_icon);
                         BadgeDrawable badgeDrawable = tab.getOrCreateBadge();

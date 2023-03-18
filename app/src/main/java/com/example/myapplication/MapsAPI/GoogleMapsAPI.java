@@ -165,13 +165,13 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
             }
             else{
                 DataSingelton.getInstance().setUserChosenPlace(placeTypeStr);
-                for (int i = 0 ; i < 3 ;i++){
+                for (int i = 0 ; i < 2 ;i++){
                     MainScreensActivity.tabLayout.getTabAt(i).view.setClickable(true);
                     MainScreensActivity.viewPager2.setUserInputEnabled(true);
                 }
-                 Ranking.createGetQuery(getActivity().getApplicationContext(),"getTopRated");
-//                progressbar.setVisibility(View.VISIBLE);
-                dialog.dismiss();
+
+                 Ranking.createGetQuery(getActivity().getApplicationContext(),progressbar,dialog);
+
             }
 
         });
