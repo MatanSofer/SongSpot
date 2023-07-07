@@ -14,11 +14,7 @@ public class RankAlgorithm {
         }
         songRatings.add(currentUserRating);
 
-
-
         double recentRatingsPercentage = 0.25; // Percentage of the most recent ratings to consider
-
-        // Calculate the number of recent ratings to consider
         int numRecentRatings = (int) Math.ceil(songRatings.size() * recentRatingsPercentage);
 
         // Calculate the weight for each rating
@@ -48,3 +44,4 @@ public class RankAlgorithm {
         return (float) (rank * 500);
     }
 }
+

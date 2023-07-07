@@ -26,8 +26,5 @@ public class OnBoardingFragment1 extends Fragment {
             startActivity(intent);
         });
         return root;
-
-       // view = super.onCreateView(inflater, container, savedInstanceState);
-       // return view;
     }
 }

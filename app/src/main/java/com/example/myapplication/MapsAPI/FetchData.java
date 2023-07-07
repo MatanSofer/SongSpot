@@ -46,10 +46,10 @@ public class FetchData extends AsyncTask<Object,String,String> {
 
                 try {
                     JSONArray jsonArrayType = jsonArray.getJSONObject(i).getJSONArray("types");
-                  //  if(placesFound.contains((String) jsonArrayType.get(0))) {
-                        placesFound.add((String) jsonArrayType.get(0));
-                        Log.d("place" + i + getName.getString("name"), (String) jsonArrayType.get(0));
-                  //  }
+                    //  if(placesFound.contains((String) jsonArrayType.get(0))) {
+                    placesFound.add((String) jsonArrayType.get(0));
+                    Log.d("place" + i + getName.getString("name"), (String) jsonArrayType.get(0));
+                    //  }
                 }catch (Exception e){
                     Log.d("ERR", "onPostExecute:cant find type location for some reason ");
                 }
@@ -58,12 +58,11 @@ public class FetchData extends AsyncTask<Object,String,String> {
                 MarkerOptions maekerOptions = new MarkerOptions();
                 maekerOptions.title(name);
                 maekerOptions.position(latLng);
-//                maekerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.));
                 googleMap.addMarker(maekerOptions);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
 
             }
-
+            placesFound.add("university");
             for(String placeType:placesFound){
                 Log.d("placetype",placeType);
             }

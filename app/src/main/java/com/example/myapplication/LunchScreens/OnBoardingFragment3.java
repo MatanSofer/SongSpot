@@ -20,7 +20,6 @@ public class OnBoardingFragment3 extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         ViewGroup root = (ViewGroup)inflater.inflate(R.layout.fragment_on_boarding3,container,false);
 
         fab = root.findViewById(R.id.fab);
@@ -28,10 +27,6 @@ public class OnBoardingFragment3 extends Fragment {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         });
-
         return root;
-
-        // view = super.onCreateView(inflater, container, savedInstanceState);
-        // return view;
     }
 }

@@ -51,8 +51,6 @@ public class BigQueryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_big_query);
         queryget = findViewById(R.id.query_btn);
         queryset = findViewById(R.id.query_btn2);
-
-
         try {
             bigquery = BigQueryOptions.newBuilder().setProjectId(PROJECT_ID)
                     .setCredentials(ServiceAccountCredentials.fromStream(BigQueryActivity.this.getAssets()
@@ -62,7 +60,6 @@ public class BigQueryActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         queryget.setOnClickListener((View v) -> {
             rungetQuery(v);
         });
@@ -81,16 +78,12 @@ public class BigQueryActivity extends AppCompatActivity {
         protected List<String> doInBackground(Void... params) {
             Log.d("BigQueryActivity", "do in background has been called");
             try {
-
-
                 QueryJobConfiguration queryConfig =
                         QueryJobConfiguration.newBuilder(query)
                                // .setDestinationTable(destinationTable)
                                 .setUseLegacySql(false)
                                 .build();
-
                 Log.d("BigQueryActivity", "created query config");
-
                 JobId jobId = JobId.of(UUID.randomUUID().toString());
                 Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
                 Log.d("BigQueryActivity", "before wait to job");
@@ -108,7 +101,6 @@ public class BigQueryActivity extends AppCompatActivity {
                     results.add(row.get("id").getStringValue());
                     Log.d("BigQueryActivity", row.get("id").getStringValue());
                 }
-
             } catch (InterruptedException e) {
                 Log.d("BigQueryActivity", "exception has been found");
                 e.printStackTrace();
@@ -120,7 +112,6 @@ public class BigQueryActivity extends AppCompatActivity {
             protected void onPostExecute (List < String > results) {
                 // Update the UI with the results
                 Log.d("BigQueryActivity", "onPostExecute has been called");
-                //Log.d("BigQueryActivity", "onPostExecute" + results.toString());
             }
         }
 
@@ -145,12 +136,9 @@ public class BigQueryActivity extends AppCompatActivity {
 
                 QueryJobConfiguration queryConfig =
                         QueryJobConfiguration.newBuilder(query)
-                                // .setDestinationTable(destinationTable)
                                 .setUseLegacySql(false)
                                 .build();
-
                 Log.d("BigQueryActivity", "SetQueryTask -created query config");
-
                 JobId jobId = JobId.of(UUID.randomUUID().toString());
                 Job queryJob = bigquery.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build());
                 Log.d("BigQueryActivity", "SetQueryTask - before wait to job");
@@ -174,8 +162,6 @@ public class BigQueryActivity extends AppCompatActivity {
             Log.d("BigQueryActivity", "SetQueryTask - onPostExecute has been called");
         }
     }
-
-
     public void runsetQuery(View view) {
         Log.d("BigQueryActivity", "SetQueryTask - runQuery has been called");
         SetQueryTask task = new SetQueryTask("UPDATE songspot.songspot_spotify.spotify_songs SET male1 = '3' WHERE id = '3YpLIrG8hG6fACaFA7NAxM'");

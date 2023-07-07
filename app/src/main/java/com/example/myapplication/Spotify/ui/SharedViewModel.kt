@@ -3,9 +3,11 @@ package com.example.myapplication.Spotify.ui
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import com.example.myapplication.DataSingelton
 import com.example.myapplication.Spotify.controllers.Repository
 import com.example.myapplication.Spotify.data.TrackModel
 import com.example.myapplication.Spotify.state.GlobalState
+import com.example.myapplication.Spotify.ui.dashboard.DashboardFragment
 
 class SharedViewModel(application: Application) : AndroidViewModel(application){
     private val repository = Repository(application as GlobalState)
@@ -17,24 +19,14 @@ class SharedViewModel(application: Application) : AndroidViewModel(application){
     }
 
     fun performSearch(query: String, songId: MutableList<String>){
-        repository.performSearch(query)
-        repository.performSongById(songId)
+        if(DashboardFragment.queryType == 1){
+            repository.performSearchPlaylist(query, DataSingelton.getInstance().generateOffset())
+
+        }else{
+            repository.performSearch(query, DataSingelton.getInstance().generateOffset())
+            repository.performSongById(songId)
+        }
+
     }
 
-    fun removeFromQueue(position: Int){
-        Log.d(TAG, "Removed at $position")
-        repository.removeFromQueue(position)
-    }
-
-    fun removeFromSearchResults(position: Int){
-        repository.removeFromSearchResults(position)
-    }
-
-    fun removeAllFromSearchResults(){
-        repository.removeAllFromSearchResults()
-    }
-
-    fun removeAllFromQueue(){
-        repository.removeAllFromQueue()
-    }
 }

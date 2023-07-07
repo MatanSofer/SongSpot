@@ -32,10 +32,7 @@ public class IntroductryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introductry);
-
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 
         logo = findViewById(R.id.logo);
         splashImg = findViewById(R.id.img);
@@ -52,7 +49,6 @@ public class IntroductryActivity extends AppCompatActivity {
         logo.animate().translationY(2400).setDuration(1000).setStartDelay(4000);
         lottieAnimationView.animate().translationY(2400).setDuration(1000).setStartDelay(4000);
         checkUserInstance();
-
     }
     public void checkUserInstance(){
         if(ModelFireBase.getCurrentUser()!=null){
@@ -61,19 +57,14 @@ public class IntroductryActivity extends AppCompatActivity {
             Log.d("log","IntroductryAtivity- user ID not found");
         }
         if (ModelFireBase.getCurrentUser() != null) {
-            Log.d("log","IntroductryAtivity- instance is exist");
-            //Intent intent = new Intent(this, MainScreensActivity.class);
-           Intent intent = new Intent(this, SpotifyStartActivity.class);
-           // Intent intent = new Intent(this, BigQueryActivity.class);
+            Intent intent = new Intent(this, SpotifyStartActivity.class);
             startActivity(intent);
-
         } else {
             Log.d("log","IntroductryAtivity- instance isnt exist");
         }
 
     }
     private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-
         public ScreenSlidePagerAdapter(@NonNull FragmentManager fm) {
             super(fm);
         }
@@ -94,7 +85,6 @@ public class IntroductryActivity extends AppCompatActivity {
 
             }
             return null;
-
         }
 
         @Override

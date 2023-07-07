@@ -1,8 +1,8 @@
 package com.example.myapplication.Spotify.network
 
+import com.example.myapplication.Spotify.data.RecommendationResults
 import com.example.myapplication.Spotify.data.SearchResults
 import com.example.myapplication.Spotify.data.TrackModel
-import com.spotify.protocol.types.Track
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
@@ -15,9 +15,14 @@ interface SpotifyWebApi{
         const val BASE_URL: String = "https://api.spotify.com/v1/"
     }
 
+    @GET("playlistRecommendations")
+    fun getPlaylistRecommendations(
+        @HeaderMap headers: Map<String, String>,
+        @Query("seed") seed: String): Call<RecommendationResults>
     @GET("search")
     fun search(@HeaderMap headers: Map<String, String>,
                @Query("q") query: String,
+               @Query("offset") offset: Int,
                @Query("type") type: String): Call<SearchResults>
 
     @GET("tracks/{id}")

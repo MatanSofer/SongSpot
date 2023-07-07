@@ -36,6 +36,7 @@ import com.example.myapplication.MainScreenTabLayout.MainScreensActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Ranking.Ranking;
 import com.example.myapplication.Spotify.SpotifyMainActivity;
+import com.example.myapplication.Spotify.controllers.Repository;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -63,16 +64,14 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
     private static final int Request_code =101 ;
     double lat,lng;
     Button button1,button2 ;
-    public static String placesType =  "";
     ProgressBar progressBarLoading;
     Dialog dialog;
     ViewGroup root;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //super.onCreate(savedInstanceState);
         root = (ViewGroup) inflater.inflate(R.layout.activity_google_maps_api, container, false);
-       // setContentView(R.layout.activity_google_maps_api);
 
         button1 = root.findViewById(R.id.firstButton);
         button2 = root.findViewById(R.id.secondButton);
@@ -80,9 +79,7 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
         progressBarLoading.setVisibility(View.INVISIBLE);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity().getApplicationContext());
-//        SupportMapFragment mapFragment =(SupportMapFragment) getParentFragmentManager()  .findFragmentById(R.id.maps);
-//        assert mapFragment != null;
-//        mapFragment.getMapAsync(this);
+
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         FragmentTransaction fragmentTransaction =
                 getChildFragmentManager().beginTransaction();
@@ -94,10 +91,9 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
             button1.setVisibility(View.INVISIBLE);
             progressBarLoading.setVisibility(View.VISIBLE);
 
-
             new Handler().postDelayed(() -> {
                 String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + "location=" + lat + "," + lng +
-                        "&radius=200" +
+                        "&radius=100" +
                         "&type=" +
                         "&sensor=true" +
                         "&key=" + getResources().getString(R.string.google_maps_key);
@@ -105,18 +101,14 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
                 dataFetch[0]=mMap;
                 dataFetch[1]=url;
                 FetchData fetchData = new FetchData();
-
                 fetchData.execute(dataFetch);
                 progressBarLoading.setVisibility(View.INVISIBLE);
                 button1.setVisibility(View.INVISIBLE);
                 button2.setVisibility(View.VISIBLE);
             }, 1000);
-
-
         });
 
         button2.setOnClickListener((View v)->{
-
             showDialog();
         });
     return root;
@@ -139,14 +131,11 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
 
         closeWindow = dialog.findViewById(R.id.close_dialog_button);
         backaccept = dialog.findViewById(R.id.backaccept);
-//        backaccept.setEnabled(false);
         tv1 = dialog.findViewById(R.id.t1);
         progressbar = dialog.findViewById(R.id.progressbar);
         borderPlaceType = dialog.findViewById(R.id.t2);
         placeTypeItem = dialog.findViewById(R.id.placeType);
         status = dialog.findViewById(R.id.status);
-
-
 
         String[] placeTypes = DataSingelton.getInstance().convertArrayType();
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.dropdown_item,placeTypes);
@@ -161,7 +150,6 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
             if(placeTypeStr.isEmpty()){
                 borderPlaceType.setError("Place cannot be empty");
                 progressbar.setVisibility(View.VISIBLE);
-
             }
             else{
                 DataSingelton.getInstance().setUserChosenPlace(placeTypeStr);
@@ -169,9 +157,7 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
                     MainScreensActivity.tabLayout.getTabAt(i).view.setClickable(true);
                     MainScreensActivity.viewPager2.setUserInputEnabled(true);
                 }
-
-                 Ranking.createGetQuery(getActivity().getApplicationContext(),progressbar,dialog);
-
+                Ranking.createGetQuery(getActivity().getApplicationContext(),progressbar,dialog);
             }
 
         });
@@ -183,11 +169,10 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
         window.setLayout(ActionBar.LayoutParams.WRAP_CONTENT ,ActionBar.LayoutParams.WRAP_CONTENT);
         dialog.show();
 
-
     }
 
 
-        @Override
+    @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         try {
             // Customise the styling of the base map using a JSON object defined
@@ -204,7 +189,6 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
         }
         mMap = googleMap ;
         getCurrentLocation();
-
     }
 
     private void getCurrentLocation(){
@@ -225,22 +209,10 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
         LocationCallback locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult( LocationResult locationResult) {
-//                Toast.makeText(getApplicationContext(),"location result is = " + locationResult
-//                        ,Toast.LENGTH_LONG).show();
-
                 if(locationResult == null){
                     Toast.makeText(getActivity().getApplicationContext(),"Current location is null",Toast.LENGTH_LONG).show();
                     return;
                 }
-
-                for (Location location : locationResult.getLocations()){
-
-                    if(location != null){
-//                        Toast.makeText(getApplicationContext(),"Current location is"+location.getLongitude()
-//                                ,Toast.LENGTH_LONG).show();
-                    }
-                }
-
             }
         };
 
@@ -268,13 +240,13 @@ public class GoogleMapsAPI extends Fragment implements OnMapReadyCallback{
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults){
         switch (Request_code){
-
             case Request_code:
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     getCurrentLocation();
                 }
         }
     }
+
 
 
 }

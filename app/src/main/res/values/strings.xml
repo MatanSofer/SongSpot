@@ -5,7 +5,7 @@
         <item>Female</item>
     </string-array>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-    AIzaSyBT9Om0rFLcR4DPqGEAXxhkNgoSBzWv7Uo
+    AIzaSyCSig_0u7klMWyfDyyhuC9P6IktUPgcpmo
     </string>
     <string name="title_activity_main_screens">MainScreensActivity</string>
     <!-- Strings used for fragments for navigation -->

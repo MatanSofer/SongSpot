@@ -35,7 +35,14 @@ class DashboardFragment : Fragment() {
     private lateinit var searchResultAdapter: SearchResultAdapter
     private lateinit var rvSearchResults: RecyclerView
     private var myContext: FragmentActivity? = null
+    companion object {
+        var queryType: Int = 0
+    }
 
+    interface PlaylistRecommendationHandler{
+        fun getPlaylistRecommendations(seed: String)
+    }
+    private lateinit var recommendationHandler: PlaylistRecommendationHandler
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
@@ -50,25 +57,20 @@ class DashboardFragment : Fragment() {
 
         Log.d("Spotify:", "DashboardFragment-onCreateView() - called")
         rvSearchResults = root.findViewById(R.id.rvSearchResults)
-
-
-
         state = activity?.application as GlobalState
 
+        if (queryType == 1 ){
+            recommendationHandler.getPlaylistRecommendations(DataSingelton.getInstance().getUserChosenPlace())
+            sharedViewModel.performSearch(DataSingelton.getInstance().getUserChosenPlace(),Ranking.songsIdResults);
+            initRecyclerView()
+        }else{
 
+            val randomGenre = LocationGenre.getRandomGenreForLocation(DataSingelton.getInstance().getUserChosenPlace())
+            Log.d("Spotify:", "genre selected " + randomGenre);
+            sharedViewModel.performSearch("genre:$randomGenre",Ranking.songsIdResults);
+            initRecyclerView()
+        }
 
-
-        val randomGenre = LocationGenre.getRandomGenreForLocation(DataSingelton.getInstance().getUserChosenPlace())
-        Log.d("Spotify:", "genre selected " + randomGenre);
-                sharedViewModel.performSearch("genre:$randomGenre",Ranking.songsIdResults);
-    //            sharedViewModel.performSearch("eminem");
-//            } else {
-//                searchInput.error = "Search query cannot be empty"
-//            }
-//        }
-
-
-        initRecyclerView()
 
         return root
     }

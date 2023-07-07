@@ -4,12 +4,14 @@ import android.util.Log;
 
 import com.example.myapplication.FireBase.Model;
 import com.example.myapplication.FireBase.ModelFireBase;
+import com.example.myapplication.Spotify.controllers.Repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Set;
 
 //this is data that recieve only when app is running
@@ -21,7 +23,10 @@ public class DataSingelton {
     private static int age;
     private static String gender;
     private static String columnName ="";
+
+
     public static final List<String> places = new ArrayList<>(Arrays.asList(
+            "airport",
             "amusement_park",
             "art_gallery",
             "bakery",
@@ -35,6 +40,7 @@ public class DataSingelton {
             "gym",
             "hair_care",
             "lodging",
+            "library",
             "night_club",
             "park",
             "restaurant",
@@ -42,13 +48,17 @@ public class DataSingelton {
             "shoe_store",
             "shopping_mall",
             "spa",
-            "school"
+            "school",
+            "subway_station",
+            "stadium",
+            "train_station",
+            "university"
     ));
+
 
     public static void setAge(int age) {
         DataSingelton.age = age;
     }
-
     public static void setGender(String gender) {
         DataSingelton.gender = gender;
     }
@@ -68,12 +78,7 @@ public class DataSingelton {
             columnName += getUserChosenPlace();
             return columnName;
         }
-
-
-
     private DataSingelton(){}
-
-
     public static DataSingelton getInstance()
     {
         if (single_instance == null)
@@ -85,7 +90,6 @@ public class DataSingelton {
     public String[] convertArrayType(){
         // we dont want to display unsupported places
         placesFound.removeIf(place -> !places.contains(place));
-
         String[] strarray = new String[placesFound.size()];
         placesFound.toArray(strarray );
         for(int i = 0 ; i < placesFound.size() ; i++){
@@ -98,19 +102,19 @@ public class DataSingelton {
 
     public String getUserChosenPlace() {
         return userChosenPlace;
-
     }
-
+    public int generateOffset() {
+        Random random = new Random();
+        return random.nextInt(20);
+    }
     //because in big query we are using _ instead of space
     public void setUserChosenPlace(String userChosenPlace) {
         this.userChosenPlace = userChosenPlace.replace(" ", "_");
     }
-
     public List<String> getPlacesFound() {
         return placesFound;
     }
     public void setPlacesFound(List<String> placesFound) {
         this.placesFound = placesFound;
     }
-
 }

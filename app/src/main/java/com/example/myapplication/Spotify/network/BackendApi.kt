@@ -6,7 +6,5 @@ interface BackendApi {
         const val BASE_URL: String = "https://spotify-colab.herokuapp.com"
     }
 
-//    @GET("/rooms/create")
-//    fun createRoom(
-//        @Query("name") name: String): Call<RecommendationResults>
+
 }

@@ -23,6 +23,6 @@ data class Tracks(val href: String?, val items: List<TrackModel>?, val limit: Nu
 
 data class Image(val height: Number?, val url: String?, val width: Number?) : Serializable
 
-data class RecommendationResults(val recommendations: List<Recommendation>?)
+data class RecommendationResults(val recommendations: List<RecommendationPlaylist>?)
 
-data class Recommendation(val count: Number, val track: TrackModel)
+data class RecommendationPlaylist(val count: Number, val track: TrackModel)

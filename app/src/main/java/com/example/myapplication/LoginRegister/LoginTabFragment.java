@@ -34,7 +34,6 @@ public class LoginTabFragment extends Fragment {
     float v =0;
     private FirebaseAuth mAuth;
     ProgressBar progressBarLoading;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = (ViewGroup) inflater.inflate(R.layout.login_tab_fragment, container, false);
@@ -43,7 +42,6 @@ public class LoginTabFragment extends Fragment {
 
         login.setOnClickListener((View v) -> {
             login();
-
         });
         return root;
     }
@@ -52,7 +50,6 @@ public class LoginTabFragment extends Fragment {
         progressBarLoading.setVisibility(View.VISIBLE);
             String UserEmail = String.valueOf(email.getText());
             String UserPassword = String.valueOf(pass.getText());
-
             mAuth.signInWithEmailAndPassword(UserEmail, UserPassword).addOnCompleteListener(task -> {
                 progressBarLoading.setVisibility(View.INVISIBLE);
                 if (task.isSuccessful()) {
@@ -61,7 +58,6 @@ public class LoginTabFragment extends Fragment {
                     emailBorder.setError(null);
                     emailBorder.setErrorEnabled(false);
                     Log.d("log","login  - user logged in succesfully");
-//                  Intent intent = new Intent(getActivity(), MainScreensActivity.class);
                     Intent intent = new Intent(getActivity(), SpotifyStartActivity.class);
                     startActivity(intent);
                 } else {
@@ -69,7 +65,6 @@ public class LoginTabFragment extends Fragment {
                     passBorder.setError("Check your details again");
                     Log.d("log","login  - user was not logged in succesfully"); }
             });
-
     }
 
     public void initView(){

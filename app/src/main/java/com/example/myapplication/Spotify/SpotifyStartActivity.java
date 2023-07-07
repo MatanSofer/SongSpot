@@ -25,30 +25,23 @@ public class SpotifyStartActivity extends AppCompatActivity {
     private static final String REDIRECT_URI = "com.example.myapplication://callback";
     private static final int REQUEST_CODE = 1337;
     private static final String SCOPES = "playlist-read-private,user-read-private";
-
     SpotifyAppRemote mSpotifyAppRemote;
     private static String token;
 
     boolean loginAlreadyFailed = false;
     TextView spotifyMsg;
     LottieAnimationView lottie;
-    TextView Spotifytv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("Spotify:","SpotifyStartActivity-onCreate() - called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spotify_start);
-       // Spotifytv = findViewById(R.id.spoti_TV);
           spotifyMsg = findViewById(R.id.spotify_connect);
           lottie = findViewById(R.id.lottie_spotify);
 
           spotifyMsg.animate().translationY(-1400).setDuration(1200).setStartDelay(0);
           lottie.animate().translationX(2000).setDuration(2000).setStartDelay(2000);
-
-//        GetBigQuery task = new GetBigQuery("SELECT id FROM songspot.songspot_spotify.spotify_songs WHERE id = '7lmeHLHBe4nmXzuXc0HDjk'",getApplicationContext());
-//        task.execute();
-
 
         Thread waitUntilAuthenticated = new Thread(() -> {
             while (mSpotifyAppRemote == null || token == null) {}
@@ -63,8 +56,8 @@ public class SpotifyStartActivity extends AppCompatActivity {
             SpotifyMainActivity.spotifyAppRemote = mSpotifyAppRemote;
             startActivity(newIntent);
             finishAffinity();
-
         });
+
         waitUntilAuthenticated.start();
         PackageManager pm = getPackageManager();
         boolean isSpotifyInstalled;
@@ -83,16 +76,6 @@ public class SpotifyStartActivity extends AppCompatActivity {
             Log.d("Spotify:","SpotifyStartActivity-onStart() - spotify is not installed!");
             //TODO - MAKE A DIALOG
             getSpotify();
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setMessage(R.string.dialogue_noSpotify)
-//                    .setTitle(R.string.dialogue_noSpotify_T)
-//                    .setPositiveButton(R.string.dialouge_install, (dialog, id) -> getSpotify())
-//                    .setNegativeButton(R.string.dialogue_exit, (dialog, id) -> finish())
-//                    .setCancelable(false);
-//
-//            AlertDialog dialog = builder.create();
-//            dialog.show();
-
         }
     }
 
@@ -101,34 +84,6 @@ public class SpotifyStartActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d("Spotify:","SpotifyStartActivity - onStart() called");
-//        PackageManager pm = getPackageManager();
-//        boolean isSpotifyInstalled;
-//        try {
-//            pm.getPackageInfo("com.spotify.music", 0);
-//            isSpotifyInstalled = true;
-//        } catch (PackageManager.NameNotFoundException e) {
-//            isSpotifyInstalled = false;
-//        }
-//
-//        if (isSpotifyInstalled) {
-//            Log.d("Spotify:","SpotifyStartActivity-onStart() - spotify is installed!");
-//            connectToSpotifyApp();
-//        }
-//        else {
-//            Log.d("Spotify:","SpotifyStartActivity-onStart() - spotify is not installed!");
-//            //TODO - MAKE A DIALOG
-//            getSpotify();
-////            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-////            builder.setMessage(R.string.dialogue_noSpotify)
-////                    .setTitle(R.string.dialogue_noSpotify_T)
-////                    .setPositiveButton(R.string.dialouge_install, (dialog, id) -> getSpotify())
-////                    .setNegativeButton(R.string.dialogue_exit, (dialog, id) -> finish())
-////                    .setCancelable(false);
-////
-////            AlertDialog dialog = builder.create();
-////            dialog.show();
-//
-//        }
     }
 
     private void getSpotify() {
@@ -151,7 +106,6 @@ public class SpotifyStartActivity extends AppCompatActivity {
             startActivity(new Intent(Intent.ACTION_VIEW, uri));
         }
         finish();
-
     }
 
     // SPOTIFY SDK
@@ -165,13 +119,11 @@ public class SpotifyStartActivity extends AppCompatActivity {
 
         SpotifyAppRemote.connect(this, connectionParams,
                 new Connector.ConnectionListener() {
-
                     @Override
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         Log.d("Spotify:","SpotifyStartActivity-connectToSpotifyApp() - connect sdk success!");
                         mSpotifyAppRemote = spotifyAppRemote;
                     }
-
                     @Override
                     public void onFailure(Throwable throwable) {
                         Log.d("Spotify:","SpotifyStartActivity - connectToSpotifyApp() - connect sdk WASNT success!");
@@ -183,17 +135,6 @@ public class SpotifyStartActivity extends AppCompatActivity {
                         }
                         loginAlreadyFailed = true;
                         //TODO - HANDLE FAILURE ALSO WITH UI
-
-                        // Handle errors here
-//                        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-//                        builder.setMessage(R.string.dialogue_appRemoteFail)
-//                                .setTitle(R.string.dialogue_appRemoteFail_T)
-//                                .setPositiveButton(R.string.dialouge_retry, (dialog, id) -> connectToSpotifyApp())
-//                                .setNegativeButton(R.string.dialogue_exit, (dialog, id) -> finish())
-//                                .setCancelable(false);
-
-                        /*AlertDialog dialog = builder.create();
-                        dialog.show();*/
                     }
                 });
 
@@ -221,7 +162,6 @@ public class SpotifyStartActivity extends AppCompatActivity {
             switch (response.getType()) {
                 // Response was successful and contains auth token
                 case TOKEN:
-//                    state.spotifyHeaders["Authorization"] = "Bearer ${response.accessToken}"
                     token = response.getAccessToken();
                     Log.d("Spotify:","SpotifyStartActivity - onActivityResult() -  found token : " +token);
                     break;

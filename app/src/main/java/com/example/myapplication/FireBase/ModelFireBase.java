@@ -2,8 +2,6 @@ package com.example.myapplication.FireBase;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.example.myapplication.DataSingelton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +21,6 @@ public class ModelFireBase {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     static FirebaseUser currentFirebaseUser;
     static FirebaseAuth mAuth;
-    static User globalUser;
     static String current;
 
     public static String getCurrentUser() {
@@ -39,44 +36,24 @@ public class ModelFireBase {
         return current;
     }
 
-
-
-    public void getAllUsers(Model.getAllUsersListener listener) {
-        List<User> data=new LinkedList<User>();
-
-        try {
-            listener.onComplete(data);
-        } catch (Exception e) {
-        }
-    }
-
     public void GetUserById(String UserId, Model.GetUserByIdListener listener) {
         DocumentReference docRef = db.collection("user").document(UserId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("log", "ModelFireBase - get user by id is successful ", task.getException());
-                        User u = User.fromJson(document.getData());
-                        listener.onComplete(u);
-                    } else {
-                        listener.onComplete(null);
-                    }
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    Log.d("log", "ModelFireBase - get user by id is successful ", task.getException());
+                    User u = User.fromJson(document.getData());
+                    listener.onComplete(u);
                 } else {
-                    Log.d("log", "ModelFireBase - get user by id not successful ", task.getException());
                     listener.onComplete(null);
                 }
+            } else {
+                Log.d("log", "ModelFireBase - get user by id not successful ", task.getException());
+                listener.onComplete(null);
             }
         });
     }
-
-
-
-
-
-
     public void addUser(User user1,Model.addUserListener listener){
         db.collection("user")
                 .document(user1.getUserId()).set(user1.toJson())
@@ -89,13 +66,9 @@ public class ModelFireBase {
                     Log.d("adduser","ModelFireBase - user NOT added succesfully");
 
                 });
-
     }
 
-    public void updateUser(User user1,Model.updateUserListener  listener){
 
-
-    }
 
 
 }

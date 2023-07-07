@@ -42,9 +42,7 @@ class GlobalState : Application() {
         }
     }
 
-    fun getAppContext(): Context? {
-        return myContext
-    }
+
 
 
 

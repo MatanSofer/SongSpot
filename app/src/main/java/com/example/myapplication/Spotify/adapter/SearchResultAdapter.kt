@@ -36,18 +36,15 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
     private var spotifyAppRemote: SpotifyAppRemote
     private val TAG = SearchResultAdapter::class.java.simpleName
     private val clickedSongIds: MutableSet<String?> = mutableSetOf()
-
     constructor(context: FragmentActivity? , appRemote: SpotifyAppRemote){
         this.context = context as SpotifyMainActivity
         this.spotifyAppRemote = appRemote
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         val view =  LayoutInflater.from(context).inflate(
             R.layout.search_result_track, parent, false
         )
-
         return ViewHolder(view)
     }
 
@@ -104,7 +101,7 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
             }
         }
         if (!clickedSongIds.contains(currentTrack.id)) {
-//            holder.progressbar.visibility = INVISIBLE
+            holder.progressbar.visibility = INVISIBLE
             holder.ratingBar.rating = 0.0f
             holder.saveRating.setText("SAVE")
             holder.saveRating.setTextColor(Color.GRAY)
@@ -143,8 +140,7 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
         holder.searchResultCard.setOnClickListener {
             Log.d("Spotify:", "Search Result Adapter -holder - track clicked :"+currentTrack.id );
             context.addToQueue(currentTrack)
-          //  context.removeFromSearchResults(position)
-            //Toast.makeText(context, "Added to queue", Toast.LENGTH_LONG).show()
+
         }
     }
 
@@ -162,7 +158,7 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>,
     }
 
     override fun onDismissed(position: Int) {
-        context?.removeFromSearchResults(position)
+        TODO("Not yet implemented")
     }
 
     override fun onItemMoved(fromPosition: Int, toPosition: Int) {

@@ -37,10 +37,8 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
     BigQuery bigquery;
     List<String> results = new ArrayList<>();
     List<Integer> IntArrayResults = new ArrayList<>();
-
     ProgressBar progressBar;
     Dialog dialog;
-
     public GetBigQuery(String query, String queryType,ProgressBar progressBar, Context context) {
         this.query = query;
         this.context = context;
@@ -174,23 +172,7 @@ public class GetBigQuery extends AsyncTask<Void, Void, List<String>> {
         IntArrayResults.add(0);
         Ranking.voteArray = IntArrayResults;
     }
-
-
-
-
-
   }
-
-
-
-
-        //should be run from outside
-//    //Call the AsyncTask to run the BigQuery query on a separate thread
-//    public void rungetQuery(View view) {
-//        Log.d("BigQueryActivity", "runQuery has been called");
-//        BigQueryActivity.GetBigQuery task = new BigQueryActivity.GetBigQuery("SELECT id FROM songspot.songspot_spotify.spotify_songs WHERE id = '7lmeHLHBe4nmXzuXc0HDjk'");
-//        task.execute();
-//    }
 
 
 

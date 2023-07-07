@@ -72,8 +72,3 @@ public class SetBigQuery extends AsyncTask<Void, Void, List<String>> {
         Log.d("BigQueryActivity", "SetQueryTask - onPostExecute has been called");
     }
 }
-//    public void runsetQuery(View view) {
-//        Log.d("BigQueryActivity", "SetQueryTask - runQuery has been called");
-//        BigQueryActivity.SetQueryTask task = new BigQueryActivity.SetQueryTask("UPDATE songspot.songspot_spotify.spotify_songs SET male1 = '3' WHERE id = '3YpLIrG8hG6fACaFA7NAxM'");
-//        task.execute();
-//    }

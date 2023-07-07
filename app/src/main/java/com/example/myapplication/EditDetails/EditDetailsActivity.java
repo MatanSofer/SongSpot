@@ -23,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class EditDetailsActivity extends AppCompatActivity {
-
     ImageButton backButton;
     TextInputLayout emailBorder,passBorder,passVerificationBorder,ageBorder,genderBorder;
     TextInputEditText email,pass,passVerification,age;
@@ -33,23 +32,14 @@ public class EditDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_details);
-
         backButton = findViewById(R.id.backbutton);
         backButton.setOnClickListener((View v)-> finish());
-
-
         initView();
-
         //dropdown menu adapter
         String[] lang = getResources().getStringArray(R.array.genders);
         ArrayAdapter arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_item, lang);
         gender.setAdapter(arrayAdapter);
-
-
         saveDetails.setOnClickListener((View v) -> validateDetails());
-
-
-
     }
     public void initView(){
         emailBorder = findViewById(R.id.emailBorder);
@@ -87,31 +77,22 @@ public class EditDetailsActivity extends AppCompatActivity {
             Model.instance.addUser(user, () -> {
                 FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
                 user1.updatePassword(password1)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("log", "edit details - pass has been changed ");
-                                    user1.updateEmail(email1)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Log.d("log", "edit details - email has been changed ");
-                                                    }
-                                                    else{
-                                                        Log.d("log", "edit details - email changed failed");
-                                                    }
-                                                }
-                                            });
-                                }
-                                else{
-                                    Log.d("log", "edit details - pass changed failed");
-                                }
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                user1.updateEmail(email1)
+                                        .addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful()) {
+                                                Log.d("log", "edit details - email has been changed ");
+                                            }
+                                            else{
+                                                Log.d("log", "edit details - email changed failed");
+                                            }
+                                        });
+                            }
+                            else{
+                                Log.d("log", "edit details - pass changed failed");
                             }
                         });
-
-                Log.d("log", "edit details - has been changed ");
             });
             finish();
         }
@@ -136,10 +117,7 @@ public class EditDetailsActivity extends AppCompatActivity {
 
     String passwordVal = "^" +
             "(?=.*[0-9])" +         //at least 1 digit
-            //"(?=.*[a-z])" +         //at least 1 lower case letter
-            //"(?=.*[A-Z])" +         //at least 1 upper case letter
             "(?=.*[a-zA-Z])" +      //any letter
-            //  "(?=.*[@#$%^&+=])" +    //at least 1 special character
             "(?=\\S+$)" +           //no white spaces
             ".{6,}" +               //at least 4 characters
             "$";
@@ -182,7 +160,6 @@ public class EditDetailsActivity extends AppCompatActivity {
             return true;
         }
     }
-    //8-99
     private Boolean validateAge(){
         String ageStr = age.getText().toString();
         if(ageStr.isEmpty()){
@@ -198,8 +175,6 @@ public class EditDetailsActivity extends AppCompatActivity {
             return true;
         }
     }
-
-    //male or female
     private Boolean validateGender(){
         String genderStr = gender.getText().toString();
         if(genderStr.isEmpty()){

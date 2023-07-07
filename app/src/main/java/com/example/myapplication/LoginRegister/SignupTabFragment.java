@@ -96,6 +96,7 @@ public class SignupTabFragment extends Fragment {
     }
 
     public void registerUser() {
+        Log.d("log", "signup activity - regising user");
 
         if (!validateEmail() | !validatePassword() | !validateVerPassword() | !validateGender() | !validateAge()) {
             return;
@@ -108,23 +109,20 @@ public class SignupTabFragment extends Fragment {
 
             mAuth.createUserWithEmailAndPassword(email1, password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
                     if (task.isSuccessful()) {
                         User user = new User(email1, age1, gender1);
                         Model.instance.addUser(user, () -> {
                             Log.d("log", "signup activity - has been added");
-//                           Intent intent = new Intent(getActivity(), MainScreensActivity.class);
                             progressBarLoading.setVisibility(View.INVISIBLE);
                             Intent intent = new Intent(getActivity(), SpotifyStartActivity.class);
                             startActivity(intent);
                         });
                     } else {
-                        Log.d("log", "signup activity -  user has not been added");
+                        Log.d("log", "signup activity -  user has not been added" + task.getException());
                     }
-
                 }
             });
-
-
         }
 
     }
@@ -147,10 +145,7 @@ public class SignupTabFragment extends Fragment {
 
     String passwordVal = "^" +
             "(?=.*[0-9])" +         //at least 1 digit
-            //"(?=.*[a-z])" +         //at least 1 lower case letter
-            //"(?=.*[A-Z])" +         //at least 1 upper case letter
             "(?=.*[a-zA-Z])" +      //any letter
-            //  "(?=.*[@#$%^&+=])" +    //at least 1 special character
             "(?=\\S+$)" +           //no white spaces
             ".{6,}" +               //at least 4 characters
             "$";
